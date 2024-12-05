@@ -58,7 +58,7 @@ abstract class Controller
         return $this->resource ? $this->resource::collection($results) : response()->json($results, 200);
     }
 
-    public function indexThrashed(Request $request)
+    public function thrashed(Request $request)
     {
         $this->checkProperties(2);
 
@@ -82,7 +82,7 @@ abstract class Controller
         return $this->resource ? $this->resource::collection($results) : response()->json($results, 200);
     }
 
-    public function allWithThrashed(Request $request)
+    public function all(Request $request)
     {
         $this->checkProperties(2);
 

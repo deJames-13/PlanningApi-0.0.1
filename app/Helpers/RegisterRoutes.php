@@ -15,8 +15,8 @@ if (!function_exists('registerResourceRoutes')) {
     {
         $routes = [
             'index' => ['method' => 'get', 'uri' => '/'],
-            'indexThrashed' => ['method' => 'get', 'uri' => '/trashed'],
-            'allWithThrashed' => ['method' => 'get', 'uri' => '/all-with-trashed'],
+            'thrashed' => ['method' => 'get', 'uri' => '/thrashed'],
+            'all' => ['method' => 'get', 'uri' => '/all'],
             'show' => ['method' => 'get', 'uri' => '/{id}'],
             'store' => ['method' => 'post', 'uri' => '/'],
             'update' => ['method' => 'put', 'uri' => '/{id}'],
