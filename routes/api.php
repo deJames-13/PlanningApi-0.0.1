@@ -22,3 +22,19 @@ foreach ($resources as $resource => $controller) {
         Log::error("Error registering resource $resource: " . $th->getMessage());
     }
 }
+
+$charts = [
+    [
+        'routeName' => 'bar1',
+        'controller' => App\Http\Controllers\Api\ChartController::class,
+        'uri' => 'bar1',
+    ],
+];
+try {
+    registerRoutes($charts, 'charts');
+    \Log::info("Routes for charts registered successfully");
+} catch (\Throwable $th) {
+    \Log::error("Error registering routes for charts: " . $th->getMessage());
+}
+
+
