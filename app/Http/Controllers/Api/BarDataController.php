@@ -68,6 +68,7 @@ class BarDataController extends Controller
             }
         }
         return new $this->resource($barData);
+
     }
 
 }

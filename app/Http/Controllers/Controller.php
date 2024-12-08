@@ -109,8 +109,11 @@ abstract class Controller
     public function show($id)
     {
         $this->checkProperties(2);
-
-        $model = $this->model::findOrFail($id);
+        try {
+            $model = $this->model::findOrFail($id);
+        } catch (\Throwable $th) {
+            return response()->json(['error' => 'Record not found'], 404);
+        }
         return $this->resource ? new $this->resource($model) : response()->json($model, 200);
     }
 
@@ -154,4 +157,25 @@ abstract class Controller
 
         return $this->resource ? new $this->resource($model) : response()->json($model, 200);
     }
+
+
+
+    public function returnRequest($request)
+    {
+        return $request->all();
+    }
+
+    public function returnValidation($request)
+    {
+        return $request->validate($this->rules);
+    }
+
+    public function customResponse($data, $status = 200)
+    {
+        return response()->json([
+            'data' => $data,
+            'message' => 'Custom response'
+        ], $status);
+    }
+
 }
