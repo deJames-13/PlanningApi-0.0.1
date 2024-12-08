@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('short_name')->nullable();
             $table->string('full_name')->nullable();
-            
+            $table->enum('type', ['division', 'department'])->default('division');
             
             $table->softDeletes();
             $table->timestamps();
