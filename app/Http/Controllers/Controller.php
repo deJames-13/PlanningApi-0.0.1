@@ -39,6 +39,9 @@ abstract class Controller
         $this->checkProperties(2);
 
         $perPage = $request->per_page ?? 10;
+        if ($perPage == 'all') {
+            $perPage = $this->model::count();
+        }
         $sort = $request->sort ?? 'id';
         $order = $request->order ?? 'asc';
         $search = $request->search ?? '';
