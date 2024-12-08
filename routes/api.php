@@ -29,6 +29,16 @@ $charts = [
         'controller' => App\Http\Controllers\Api\ChartController::class,
         'uri' => 'bar1',
     ],
+    [
+        'routeName' => 'budgets',
+        'controller' => App\Http\Controllers\Api\ChartController::class,
+        'uri' => 'budgets',
+    ],
+    [
+        'routeName' => 'objectives',
+        'controller' => App\Http\Controllers\Api\ChartController::class,
+        'uri' => 'objectives',
+    ]
 ];
 try {
     registerRoutes($charts, 'charts');
