@@ -15,15 +15,15 @@ class BudgetAnnualController extends Controller
     protected $rules = [
         'budget_id' => 'required|integer|exists:budgets,id',
         'year' => 'required|integer',
-        'target' => 'required|numeric',
-        'accomplishment' => 'required|numeric',
+        'allotment' => 'required|numeric',
+        'obligated' => 'required|numeric',
         'utilization_rate' => 'required|numeric',
         'quarters' => 'required|array',
-        'quarters.*.quarter' => 'required|integer',
-        'quarters.*.label' => 'required|string',
-        'quarters.*.allotment' => 'required|numeric',
-        'quarters.*.obligated' => 'required|numeric',
-        'quarters.*.utilization_rate' => 'required|numeric',
+        'quarters.*.quarter' => 'integer',
+        'quarters.*.label' => 'string',
+        'quarters.*.allotment' => 'numeric',
+        'quarters.*.obligated' => 'numeric',
+        'quarters.*.utilization_rate' => 'numeric',
     ];
     
     public function store(Request $request)

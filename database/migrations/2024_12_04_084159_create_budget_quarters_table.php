@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('budget_quarters', function (Blueprint $table) {
             $table->id();
             $table->smallInteger('quarter');
-            $table->string('label');
-            $table->decimal('allotment', 10, 2);
-            $table->decimal('obligated', 10, 2);
-            $table->decimal('utilization_rate', 10, 2);
+            $table->string('label')->nullable();
+            $table->decimal('allotment', 10, 2)->default(0);
+            $table->decimal('obligated', 10, 2)->default(0);
+            $table->decimal('utilization_rate', 10, 2)->default(0);
 
             // Parent: BudgetAnnual
             $table->foreignId('budget_annual_id')->constrained('budget_annuals')->onDelete('cascade');

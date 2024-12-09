@@ -20,15 +20,15 @@ class BudgetController extends Controller
         'sector_id' => 'nullable|integer|exists:sectors,id',
         'annual' => 'nullable|array',
         'annual.*.year' => 'required|integer',
-        'annual.*.target' => 'required|numeric',
-        'annual.*.accomplishment' => 'required|numeric',
+        'annual.*.allotment' => 'required|numeric',
+        'annual.*.obligated' => 'required|numeric',
         'annual.*.utilization_rate' => 'required|numeric',
-        'annual.*.quarters' => 'required|array',
-        'annual.*.quarters.*.quarter' => 'required|integer',
-        'annual.*.quarters.*.label' => 'required|string',
-        'annual.*.quarters.*.allotment' => 'required|numeric',
-        'annual.*.quarters.*.obligated' => 'required|numeric',
-        'annual.*.quarters.*.utilization_rate' => 'required|numeric',
+        'annual.*.quarters' => 'array',
+        'annual.*.quarters.*.quarter' => 'integer',
+        'annual.*.quarters.*.label' => 'string',
+        'annual.*.quarters.*.allotment' => 'numeric',
+        'annual.*.quarters.*.obligated' => 'numeric',
+        'annual.*.quarters.*.utilization_rate' => 'numeric',
     ];
     
     public function store(Request $request)

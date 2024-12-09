@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('budget_annuals', function (Blueprint $table) {
             $table->id();
             $table->year('year');
-            $table->decimal('target', 10, 2);
-            $table->decimal('accomplishment', 10, 2);
+            $table->decimal('allotment', 10, 2);
+            $table->decimal('obligated', 10, 2);
             $table->decimal('utilization_rate', 10, 2);
 
             // Parent: Budget
