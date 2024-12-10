@@ -1,4 +1,4 @@
-- [ ] Charts
+- [X] Charts
     - [x] BAR1
-    - [ ] Budget
-    - [ ] Objectives
+    - [X] Budget
+    - [X] Objectives
