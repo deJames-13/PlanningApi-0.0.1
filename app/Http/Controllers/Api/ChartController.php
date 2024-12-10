@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\BarData;
+use App\Models\Sector;
+use App\Http\Resources\SectorResource;
+use App\Http\Resources\BudgetResource;
+use App\Http\Resources\ObjectiveResource;
 
 class ChartController extends Controller
 {
@@ -33,18 +37,32 @@ class ChartController extends Controller
     public function budgets(Request $request)
     {
         $sectorName = $request->sector_name;
+        $sector = Sector::where('name', $sectorName)->first();
+        if (!$sector) {
+            return response()->json([
+                'message' => 'Sector not found',
+            ], 404);
+        }
+
         return response()->json([
-            'error' => 'not implemented'
-        ], 501);
+            'data' => BudgetResource::collection($sector->budgets),
+        ]);
+
     }
 
     // OBJECTIVES DATA CHART
     public function objectives(Request $request)
     {
         $sectorName = $request->sector_name;
+        $sector = Sector::where('name', $sectorName)->first();
+        if (!$sector) {
+            return response()->json([
+                'message' => 'Sector not found',
+            ], 404);
+        }
         return response()->json([
-            'error' => 'not implemented'
-        ], 501);
+            'data' => ObjectiveResource::collection($sector->objectives),
+        ]);
     }
     
 }

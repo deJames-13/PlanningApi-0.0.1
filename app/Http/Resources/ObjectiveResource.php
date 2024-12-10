@@ -17,6 +17,8 @@ class ObjectiveResource extends JsonResource
         return [
             ...parent::toArray($request),
             'quarters' => $this->quarter,
+            'total' => $this->getTotal(),
+            'sector' => $this->sector_id ? $this->sector : null,
         ];
     }
 }

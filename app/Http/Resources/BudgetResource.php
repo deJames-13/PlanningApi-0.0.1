@@ -22,6 +22,7 @@ class BudgetResource extends JsonResource
                     'quarters' => $annual->quarter
                 ];
             }),
+            'sector' => $this->sector_id? $this->sector : null,
         ];
     }
 }

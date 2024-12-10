@@ -22,4 +22,15 @@ class Objective extends Model
     {
         return $this->hasMany(ObjectiveQuarter::class);
     }
+
+    public function getTotal()
+    {
+        $total = [
+            'target' => $this->quarter->sum('target'),
+            'accomplishment' => $this->quarter->sum('accomplishment'),
+            'percentage' => 0,
+        ];
+        $total['percentage'] = $total['target'] > 0 ? round(($total['accomplishment'] / $total['target']) * 100, 2) : 0;
+        return $total;
+    }
 }
