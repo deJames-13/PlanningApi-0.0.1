@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Log;
 
 $resources = [
-    'users' => App\Http\Controllers\Api\UserController::class,
+    'users' => App\Http\Controllers\Api\UserController::class, 
     'departments' => App\Http\Controllers\Api\DepartmentController::class,
     'sectors' => App\Http\Controllers\Api\SectorController::class,
     'objectives' => App\Http\Controllers\Api\ObjectiveController::class,
