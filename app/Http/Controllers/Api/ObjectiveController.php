@@ -16,22 +16,25 @@ class ObjectiveController extends Controller
         'description' => 'nullable|string',
         'sector_id' => 'required|exists:sectors,id',
         'quarters' => 'nullable|array',
-        'quarters.*.quarter' => 'required|integer|between:1,4',
-        'quarters.*.label' => 'required|string|max:255',
-        'quarters.*.target' => 'required|numeric',
-        'quarters.*.accomplishment' => 'required|numeric',
-        'quarters.*.utilization_rate' => 'required|numeric',
+        'quarters.*.quarter' => 'nullable|integer|between:1,4',
+        'quarters.*.label' => 'nullable|string|max:255',
+        'quarters.*.target' => 'nullable|numeric',
+        'quarters.*.accomplishment' => 'nullable|numeric',
+        'quarters.*.utilization_rate' => 'nullable|numeric',
     ];
 
 
     public function store(Request $request)
     {
         $validated = $request->validate($this->rules);
-        $quarters = $validated['quarters'];
-        unset($validated['quarters']);
+        $quarterData = [];
+        if (isset($validated['quarters'])) {
+            $quarterData = $validated['quarters'];
+            unset($validated['quarters']);
+        }
 
         $objective = $this->model::create($validated);
-        $objective->quarter()->createMany($quarters);
+        $objective->quarter()->createMany($quarterData);
 
         return new $this->resource($objective);
     }
@@ -39,13 +42,16 @@ class ObjectiveController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate($this->rules);
-        $quarters = $validated['quarters'];
-        unset($validated['quarters']);
+        $quarterData = [];
+        if (isset($validated['quarters'])) {
+            $quarterData = $validated['quarters'];
+            unset($validated['quarters']);
+        }
 
         $objective = $this->model::findOrFail($id);
         $objective->update($validated);
         $objective->quarter()->delete();
-        $objective->quarter()->createMany($quarters);
+        $objective->quarter()->createMany($quarterData);
 
         return new $this->resource($objective);
     }
