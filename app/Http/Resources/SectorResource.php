@@ -18,8 +18,11 @@ class SectorResource extends JsonResource
     {
         return [
             ...parent::toArray($request),
-            'objectives' => ObjectiveResource::collection($this->whenLoaded('objectives')),
-            'budgets' => BudgetResource::collection($this->whenLoaded('budgets')),
+            // 'objectives' => ObjectiveResource::collection($this->whenLoaded('objectives')),
+            // 'budgets' => BudgetResource::collection($this->whenLoaded('budgets')),
+            'objectives' => $this->objectives,
+            'budgets' => $this->budgets,
+            'department' => $this->department,
         ];
     }
 }
