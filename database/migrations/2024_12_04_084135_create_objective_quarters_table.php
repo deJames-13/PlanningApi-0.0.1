@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('objective_quarters', function (Blueprint $table) {
             $table->id();
             $table->smallInteger('quarter');
-            $table->string('label');
-            $table->decimal('target', 10, 2);
-            $table->decimal('accomplishment', 10, 2);
-            $table->decimal('utilization_rate', 10, 2);
+            $table->string('label')->nullable();
+            $table->decimal('target', 10, 2)->default(0);
+            $table->decimal('accomplishment', 10, 2)->default(0);
+            $table->decimal('utilization_rate', 10, 2)->default(0);
 
             // Parent: Objective
             $table->foreignId('objective_id')->constrained('objectives')->onDelete('cascade');

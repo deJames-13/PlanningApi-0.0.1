@@ -20,12 +20,12 @@ class BudgetController extends Controller
         'sector_id' => 'nullable|integer|exists:sectors,id',
         'annual' => 'nullable|array',
         'annual.*.year' => 'required|integer',
-        'annual.*.allotment' => 'required|numeric',
-        'annual.*.obligated' => 'required|numeric',
-        'annual.*.utilization_rate' => 'required|numeric',
+        'annual.*.allotment' => 'nullable|numeric',
+        'annual.*.obligated' => 'nullable|numeric',
+        'annual.*.utilization_rate' => 'nullable|numeric',
         'annual.*.quarters' => 'array',
         'annual.*.quarters.*.quarter' => 'integer',
-        'annual.*.quarters.*.label' => 'string',
+        'annual.*.quarters.*.label' => 'nullable|string',
         'annual.*.quarters.*.allotment' => 'numeric',
         'annual.*.quarters.*.obligated' => 'numeric',
         'annual.*.quarters.*.utilization_rate' => 'numeric',
@@ -41,7 +41,6 @@ class BudgetController extends Controller
         }
 
         $budget = $this->model::create($validated);
-
         foreach ($annualData as $annual) {
             $quarters = $annual['quarters'];
             unset($annual['quarters']);
@@ -57,13 +56,15 @@ class BudgetController extends Controller
         $validated = $request->validate($this->rules);
         $annualData = [];
         if ($request->has('annual')) {
-            $annual = $request->annual;
+            $annualData = $request->annual;
             unset($request['annual']);
         }
 
-        $model = $this->model::findOrFail($id);
-        $budget = $model->update($request->all());
-
+        $budget = $this->model::find($id);
+        if (!$budget) {
+            return response()->json(['message' => 'Budget not found.'], 404);
+        }
+        $budget->update($validated);
         $budget->annual()->delete();
         foreach ($annualData as $annual) {
             $quarters = $annual['quarters'];

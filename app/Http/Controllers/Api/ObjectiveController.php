@@ -15,7 +15,7 @@ class ObjectiveController extends Controller
         'title' => 'required|string|max:255',
         'description' => 'nullable|string',
         'sector_id' => 'required|exists:sectors,id',
-        'quarters' => 'required|array',
+        'quarters' => 'nullable|array',
         'quarters.*.quarter' => 'required|integer|between:1,4',
         'quarters.*.label' => 'required|string|max:255',
         'quarters.*.target' => 'required|numeric',
