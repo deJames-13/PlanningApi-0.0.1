@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\BarData;
+use App\Models\Budget;
 use App\Models\Sector;
 use App\Http\Resources\SectorResource;
 use App\Http\Resources\BudgetResource;
@@ -37,6 +38,13 @@ class ChartController extends Controller
     public function budgets(Request $request)
     {
         $sectorName = $request->sector_name;
+        if ($sectorName == 'none'){
+            $budgets = Budget::whereNull('sector_id')->get();
+            return response()->json([
+                'data' => BudgetResource::collection($budgets),
+            ]);
+        }
+        
         $sector = Sector::where('name', $sectorName)->first();
         if (!$sector) {
             return response()->json([
