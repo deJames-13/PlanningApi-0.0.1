@@ -24,11 +24,19 @@ class AuthController extends Controller
         $user = auth()->user();
         $token = $user->createToken('authToken')->plainTextToken;
         
-        return response()->json(['user' => $user, 'accessToken' => $token], 200);
+        return response()->json([
+            'user' => array_merge($user->toArray(), [
+                'roles' => $user->getRoleNames(),
+            ]), 
+            'accessToken' => $token
+        ], 200);
         
     }
 
     public function logout(Request $request) {
+        if (!$request->user()) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
         $user = User::where('id', $request->user()->id)->first();
         if (!$user) {
             return response()->json(['message' => 'User not found'], 404);
@@ -59,10 +67,16 @@ class AuthController extends Controller
     }
 
     public function refresh(Request $request) {
-        $token = $request->user()->token();
-        $token->revoke();
+        if (!$request->user()) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+        $user = User::where('id', $request->user()->id)->first();
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+        $user->tokens()->delete();
         $newToken = $request->user()->createToken('authToken')->plainTextToken;
-        return response()->json(['accessToken' => $newToken], 200);
+        return response()->json(['token' => $newToken], 200);
     }
 
     public function forgotPassword(Request $request) {
