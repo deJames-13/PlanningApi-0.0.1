@@ -37,4 +37,6 @@ return [
 
     'same_site' => env('SESSION_SAME_SITE', 'none'),
 
+    'partitioned' => true,
+
 ];

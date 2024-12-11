@@ -32,4 +32,7 @@ return [
     'secure' => env('SESSION_SECURE_COOKIE', true),
 
     'same_site' => 'none',
+    
+    'partitioned' => true,
+
 ];
