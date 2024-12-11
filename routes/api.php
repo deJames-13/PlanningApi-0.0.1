@@ -1,7 +1,7 @@
 <?php
 
 
-$REQUIRE_AUTH = config('app.debug') ? 'auth:sanctum' : 'auth:sanctum';
+$REQUIRE_AUTH = config('app.debug') ? 'jwt.auth' : 'jwt.auth';
 \Log::info("REQUIRE_AUTH: $REQUIRE_AUTH");
 
 /*

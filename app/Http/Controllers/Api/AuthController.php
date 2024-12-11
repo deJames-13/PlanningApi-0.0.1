@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
@@ -27,7 +28,7 @@ class AuthController extends Controller
         }
 
         $user = auth()->user();
-        $token = $user->createToken('authToken')->plainTextToken;
+        $token = JWTAuth::fromUser($user);
         
         return response()->json([
             'user' => array_merge($user->toArray(), [
@@ -47,6 +48,7 @@ class AuthController extends Controller
             return response()->json(['message' => 'User not found'], 404);
         }
         $user->tokens()->delete();
+        JWTAuth::invalidate(JWTAuth::getToken());
         return response()->json(['message' => 'Successfully logged out'], 200);
     }
 
@@ -59,7 +61,7 @@ class AuthController extends Controller
 
         $valid['password'] = bcrypt($valid['password']);
         $user = User::create($valid);
-        $token = $user->createToken('authToken')->plainTextToken;
+        $token = JWTAuth::fromUser($user);
 
         return response()->json(['user' => $user, 'accessToken' => $token], 201);
     }
@@ -80,7 +82,8 @@ class AuthController extends Controller
             return response()->json(['message' => 'User not found'], 404);
         }
         $user->tokens()->delete();
-        $newToken = $request->user()->createToken('authToken')->plainTextToken;
+        JWTAuth::invalidate(JWTAuth::getToken());
+        $newToken = JWTAuth::fromUser($user);
         return response()->json(['token' => $newToken], 200);
     }
 
@@ -94,8 +97,8 @@ class AuthController extends Controller
             return response()->json(['message' => 'User not found'], 404);
         }
 
-        $token = $user->createToken('passwordResetToken')->plainTextToken;
-        return response()->json(['resetToken' => $token], 200);
+        $resetToken = JWTAuth::fromUser($user);
+        return response()->json(['resetToken' => $resetToken], 200);
     }
 
     public function resetPassword(Request $request) {
@@ -110,8 +113,8 @@ class AuthController extends Controller
             return response()->json(['message' => 'User not found'], 404);
         }
 
-        $token = $user->token();
-        if ($token->plainTextToken !== $valid['resetToken']) {
+        $token = JWTAuth::parseToken($valid['resetToken']);
+        if (!$token->check()) {
             return response()->json(['message' => 'Invalid token'], 401);
         }
 
