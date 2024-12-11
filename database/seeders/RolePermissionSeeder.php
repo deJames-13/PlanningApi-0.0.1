@@ -17,7 +17,6 @@ class RolePermissionSeeder extends Seeder
     {
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
-
         /* 
         | -----------------------------------------------------
         | ROLEs and PERMISSIONs
@@ -32,6 +31,40 @@ class RolePermissionSeeder extends Seeder
         / -----------------------------------------------------
         / "manage $resource" (view, create, edit, delete, restore) 
          */
+        $resources = [
+            'budgets',
+            'budget-annual',
+            'objectives',
+            'bar-data',
+            'particular',
+            'particular-value',
+            'sectors',
+            'departments',
+            'users',
+            'roles',
+            'permissions',
+        ];
+
+        // Map resources: $resource.$method
+        foreach ($resources as $resource) {
+            $methods = [
+                'index',
+                'thrashed',
+                'all',
+                'show',
+                'store',
+                'update',
+                'destroy',
+                'restore',
+            ];
+            foreach ($methods as $method) {
+                Permission::create(['name' => "{$resource} {$method}"]);
+            }
+            Permission::create(['name' => "manage {$resource}"]);
+
+        }            
+
+
         $userOnly = [
             'manage budgets',
             'manage budget-annual',
@@ -39,20 +72,26 @@ class RolePermissionSeeder extends Seeder
             'manage bar-data',
             'manage particular',
             'manage particular-value',
+            'sectors index',
+            'sectors show',
+            'departments index',
+            'departments show',
         ];
         $adminOnly = array_merge($userOnly, [
             'manage sectors',
             'manage departments',
+            'users index',
+            'users show',
+            'roles index',
+            'roles show',
+            'permissions index',
+            'permissions show',
         ]);
         $allPermissions = array_merge($adminOnly, [
             'manage users',
             'manage roles',
             'manage permissions',
         ]);
-
-        foreach ($allPermissions as $permission) {
-            Permission::create(['name' => $permission]);
-        }
 
         // SUPER ADMIN
         $superAdmin = Role::create(['name' => 'super-admin']);

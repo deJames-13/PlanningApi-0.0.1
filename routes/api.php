@@ -36,7 +36,6 @@ Route::get('csrf', [App\Http\Controllers\Api\AuthController::class, 'csrf']);
 $resources = [
     'users' => [
         'controller'=>App\Http\Controllers\Api\UserController::class,
-        'middleware' => ['role:super-admin']
     ],
     /* TBC
     'roles' => [
@@ -50,35 +49,27 @@ $resources = [
     */
     'departments' => [
         'controller'=>App\Http\Controllers\Api\DepartmentController::class,
-        'middleware' => ['role:admin|super-admin']
     ],
     'sectors' => [
         'controller'=>App\Http\Controllers\Api\SectorController::class,
-        'middleware' => ['role:admin|super-admin']
     ],
     'objectives' => [
         'controller'=>App\Http\Controllers\Api\ObjectiveController::class,
-        'middleware' => ['role:user|admin|super-admin']
     ],
     'budgets' => [
         'controller'=>App\Http\Controllers\Api\BudgetController::class,
-        'middleware' => ['role:user|admin|super-admin']
     ],
     'budget-annual' => [
         'controller'=>App\Http\Controllers\Api\BudgetAnnualController::class,
-        'middleware' => ['role:user|admin|super-admin']
     ],
     'bar-data' => [
         'controller'=>App\Http\Controllers\Api\BarDataController::class,
-        'middleware' => ['role:user|admin|super-admin']
     ],
     'particular' => [
         'controller'=>App\Http\Controllers\Api\ParticularController::class,
-        'middleware' => ['role:user|admin|super-admin']
     ],
     'particular-value' => [
         'controller'=>App\Http\Controllers\Api\ParticularValueController::class,
-        'middleware' => ['role:user|admin|super-admin']
     ],
 ];
 

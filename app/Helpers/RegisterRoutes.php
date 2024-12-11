@@ -35,12 +35,15 @@ if (!function_exists('registerResourceRoutes')) {
         ];
 
         return Route::middleware($middleware)->group(function () use ($routes, $controller, $resourceName) {
-                Route::prefix($resourceName)->group(function () use ($routes, $controller) {
+                Route::prefix($resourceName)->group(function () use ($routes, $controller, $resourceName) {
                     foreach ($routes as $method => $route) {
                         if (!method_exists($controller, $method)) {
                             throw new Exception("Method '{$method}' does not exist in controller '{$controller}'.");
                         }
-                        Route::match([$route['method']], $route['uri'], [$controller, $method]);
+                        Route::match([$route['method']], $route['uri'], [$controller, $method])->middleware([
+                            "role_or_permission:super-admin|{$resourceName} {$method}|manage {$resourceName}"
+                        ]);
+                        \Log::info("Route: {$route['method']} \n{$route['uri']} -> {$controller}@{$method} \nMiddleware: permission:{$resourceName} {$method}|manage {$resourceName}");
                     }
                 });
         });
