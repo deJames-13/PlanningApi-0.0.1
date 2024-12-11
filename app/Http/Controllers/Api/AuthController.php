@@ -4,8 +4,103 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class AuthController extends Controller
 {
-    //
+    protected $isApiResource = false;
+
+
+    public function authenticate(Request $request) {
+        $valid = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|string',
+        ]);
+        
+        if (!auth()->attempt($valid)) {
+            return response()->json(['message' => 'Invalid credentials!'], 401);
+        }
+
+        $user = auth()->user();
+        $token = $user->createToken('authToken')->plainTextToken;
+        
+        return response()->json(['user' => $user, 'accessToken' => $token], 200);
+        
+    }
+
+    public function logout(Request $request) {
+        $user = User::where('id', $request->user()->id)->first();
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+        $user->tokens()->delete();
+        return response()->json(['message' => 'Successfully logged out'], 200);
+    }
+
+    public function register(Request $request) {
+        $valid = $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|string',
+        ]);
+
+        $valid['password'] = bcrypt($valid['password']);
+        $user = User::create($valid);
+        $token = $user->createToken('authToken')->plainTextToken;
+
+        return response()->json(['user' => $user, 'accessToken' => $token], 201);
+    }
+
+    public function me(Request $request) {
+        return response()->json([
+            'user' => $request->user(),
+            'roles' => $request->user()->getRoleNames(),
+        ], 200);
+    }
+
+    public function refresh(Request $request) {
+        $token = $request->user()->token();
+        $token->revoke();
+        $newToken = $request->user()->createToken('authToken')->plainTextToken;
+        return response()->json(['accessToken' => $newToken], 200);
+    }
+
+    public function forgotPassword(Request $request) {
+        $valid = $request->validate([
+            'email' => 'required|email',
+        ]);
+
+        $user = User::where('email', $valid['email'])->first();
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+
+        $token = $user->createToken('passwordResetToken')->plainTextToken;
+        return response()->json(['resetToken' => $token], 200);
+    }
+
+    public function resetPassword(Request $request) {
+        $valid = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|string',
+            'resetToken' => 'required|string',
+        ]);
+
+        $user = User::where('email', $valid['email'])->first();
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+
+        $token = $user->token();
+        if ($token->plainTextToken !== $valid['resetToken']) {
+            return response()->json(['message' => 'Invalid token'], 401);
+        }
+
+        $user->password = bcrypt($valid['password']);
+        $user->save();
+        $token->revoke();
+        return response()->json(['message' => 'Password reset successfully'], 200);
+    }
+
+    
 }
