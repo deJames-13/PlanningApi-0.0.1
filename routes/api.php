@@ -18,6 +18,7 @@ Route::post('logout', [App\Http\Controllers\Api\AuthController::class, 'logout']
 Route::get('me', [App\Http\Controllers\Api\AuthController::class, 'me'])->middleware($REQUIRE_AUTH);
 
 Route::get('refresh', [App\Http\Controllers\Api\AuthController::class, 'refresh']);
+Route::get('csrf', [App\Http\Controllers\Api\AuthController::class, 'csrf']);
 
 
 

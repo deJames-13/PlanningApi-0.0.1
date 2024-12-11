@@ -10,6 +10,11 @@ class AuthController extends Controller
 {
     protected $isApiResource = false;
 
+    // send csrf token to a client/frontend app
+    public function csrf(Request $request) {
+        return response()->json(['csrf_token' => csrf_token()], 200);
+    }
+
 
     public function authenticate(Request $request) {
         $valid = $request->validate([
