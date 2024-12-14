@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('sectors', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->string('short_name')->nullable();
+            $table->string('slug');
             $table->string('full_name')->nullable();
             $table->string('description')->nullable();
             

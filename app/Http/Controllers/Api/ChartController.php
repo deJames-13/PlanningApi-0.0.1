@@ -37,15 +37,15 @@ class ChartController extends Controller
     // BUDGETS DATA CHART
     public function budgets(Request $request)
     {
-        $sectorName = $request->sector_name;
-        if ($sectorName == 'none'){
+        $sectorSlug = $request->sector_slug;
+        if ($sectorSlug == 'none'){
             $budgets = Budget::whereNull('sector_id')->get();
             return response()->json([
                 'data' => BudgetResource::collection($budgets),
             ]);
         }
         
-        $sector = Sector::where('name', $sectorName)->first();
+        $sector = Sector::where('slug', $sectorSlug)->first();
         if (!$sector) {
             return response()->json([
                 'message' => 'Sector not found',
@@ -61,8 +61,8 @@ class ChartController extends Controller
     // OBJECTIVES DATA CHART
     public function objectives(Request $request)
     {
-        $sectorName = $request->sector_name;
-        $sector = Sector::where('name', $sectorName)->first();
+        $sectorSlug = $request->sector_slug;
+        $sector = Sector::where('slug', $sectorSlug)->first();
         if (!$sector) {
             return response()->json([
                 'message' => 'Sector not found',

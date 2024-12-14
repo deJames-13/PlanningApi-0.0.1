@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('departments', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('short_name')->nullable();
+            $table->string('name')->unique();
+            $table->string('slug');
             $table->string('full_name')->nullable();
             $table->enum('type', ['division', 'department'])->default('division');
             

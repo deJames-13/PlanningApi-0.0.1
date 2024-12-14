@@ -30,4 +30,16 @@ class Sector extends Model
         return $this->hasMany(Budget::class);
     }
 
+     /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+        static::saving(function ($sector) {
+            $sector->slug = \Str::slug($sector->name);
+        });
+    }
 }

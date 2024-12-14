@@ -13,10 +13,8 @@ return new class extends Migration
     {
         Schema::create('bar_datas', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->string('title')->unique();
             $table->text('description')->nullable();
-            // $table->text('status')->
-            
             $table->softDeletes();
             $table->timestamps();
         });

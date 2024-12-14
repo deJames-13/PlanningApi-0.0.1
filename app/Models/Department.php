@@ -15,4 +15,16 @@ class Department extends Model
     {
         return $this->hasMany(Sector::class);
     }
+    /**
+    * The "booted" method of the model.
+    *
+    * @return void
+    */
+   protected static function boot()
+   {
+       parent::boot();
+       static::saving(function ($department) {
+           $department->slug = \Str::slug($department->name);
+       });
+   }
 }
