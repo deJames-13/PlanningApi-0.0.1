@@ -37,6 +37,11 @@ class SectorController extends Controller
 
         return $this->resource ? new $this->resource($model) : response()->json($model, 200);
     }
+    
+    public function sectorList(){
+        $sectors = Sector::all();
+        return response()->json($sectors);
+    }
 
 
 }

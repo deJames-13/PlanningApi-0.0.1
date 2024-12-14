@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Department;
+use App\Models\Sector;
 use App\Http\Resources\DepartmentResource;
 
 class DepartmentController extends Controller
@@ -31,6 +32,17 @@ class DepartmentController extends Controller
         $model->update($validData);
 
         return $this->resource ? new $this->resource($model) : response()->json($model, 200);
+    }
+
+    public function departmentNavList(Request $request)
+    {
+        $sectors = Sector::where('department_id', null)->get();
+        $departments = Department::all();
+        $departmentsWithSectors = $this->resource::collection($departments);
+        
+        return response()->json([
+            'data' => array_merge($sectors->toArray(), $departmentsWithSectors->toArray($request))
+        ], 200);
     }
 
 

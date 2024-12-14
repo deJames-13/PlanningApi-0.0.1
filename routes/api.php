@@ -89,13 +89,22 @@ Route::middleware($REQUIRE_AUTH)->group(function () use($resources, $REQUIRE_AUT
 | CHARTS (Public/Protected) 
 |--------------------------------------------------------------------------
 */
-
 Route::prefix('/charts')->group(function () use($REQUIRE_AUTH) {
     Route::get('bar1', [App\Http\Controllers\Api\ChartController::class, 'bar1']);
     Route::get('budgets', [App\Http\Controllers\Api\ChartController::class, 'budgets']);
     Route::get('objectives', [App\Http\Controllers\Api\ChartController::class, 'objectives']);
-})->middleware($REQUIRE_AUTH);
+});
 
 
 
+/*
+|--------------------------------------------------------------------------
+| Public Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::prefix('public')->group(function(){
+    Route::get('departments', [App\Http\Controllers\Api\DepartmentController::class, 'departmentNavList']);
+    Route::get('sectors', [App\Http\Controllers\Api\SectorController::class, 'sectorList']);
+});
 
