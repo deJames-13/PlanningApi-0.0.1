@@ -17,7 +17,6 @@ class ParticularController extends Controller
         'bar_data_id' => 'required|integer|exists:bar_datas,id',
         'title' => 'required|string|max:255',
         'description' => 'nullable|string',
-        'type' => 'required|string',
         'values' => 'required|array',
         'values.*.year' => 'required|integer',
         'values.*.target' => 'required|numeric',

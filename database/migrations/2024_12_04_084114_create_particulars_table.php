@@ -15,8 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description')->nullable();
-            $table->string('type');
-
 
             // Parent: BarData
             $table->foreignId('bar_data_id')->constrained('bar_datas')->onDelete('cascade');
