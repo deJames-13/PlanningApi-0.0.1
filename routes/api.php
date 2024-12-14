@@ -1,7 +1,7 @@
 <?php
 
 
-$REQUIRE_AUTH = config('app.debug') ? 'jwt.auth' : 'jwt.auth';
+$REQUIRE_AUTH = config('app.auth_disabled') ? '' : 'jwt.auth';
 \Log::info("REQUIRE_AUTH: $REQUIRE_AUTH");
 
 /*
