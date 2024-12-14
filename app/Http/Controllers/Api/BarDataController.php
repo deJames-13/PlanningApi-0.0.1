@@ -24,6 +24,10 @@ class BarDataController extends Controller
         'particulars.*.values.*.target' => 'required|numeric',
         'particulars.*.values.*.accomplishment' => 'required|numeric',
     ];
+    protected $searchableColumns = [
+        'title',
+        'description',
+    ];
 
     public function store(Request $request)
     {

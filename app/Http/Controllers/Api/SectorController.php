@@ -17,6 +17,7 @@ class SectorController extends Controller
         'description' => 'nullable|string|max:255',
         'department_id' => 'nullable|integer|exists:departments,id',
     ];
+    protected $searchableColumns = ['name', 'full_name', 'description', 'department_id'];
 
 
     public function update(Request $request, $id)

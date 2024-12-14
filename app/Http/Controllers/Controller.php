@@ -51,7 +51,14 @@ abstract class Controller
         if (!empty($this->searchableColumns) && !empty($search)) {
             $query->where(function ($q) use ($search) {
                 foreach ($this->searchableColumns as $column) {
-                    $q->orWhere($column, 'like', '%' . $search . '%');
+                    if (strpos($column, '.') !== false) {
+                        $relationship = explode('.', $column);
+                        $q->orWhereHas($relationship[0], function ($q) use ($search, $relationship) {
+                            $q->where($relationship[1], 'like', '%' . $search . '%');
+                        });
+                    } else {
+                        $q->orWhere($column, 'like', '%' . $search . '%');
+                    }
                 }
             });
         }
