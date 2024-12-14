@@ -112,10 +112,14 @@ abstract class Controller
     public function show($id)
     {
         $this->checkProperties(2);
+        $isSlug = request()->is_slug ?? false;
         try {
-            $model = $this->model::findOrFail($id);
+            $model = $isSlug ? $this->model::where('slug', $id)->firstOrFail() : $this->model::findOrFail($id);
         } catch (\Throwable $th) {
-            return response()->json(['error' => 'Record not found'], 404);
+            return response()->json([
+                'error' => 'Record not found',
+                'isSlug' => $isSlug,
+            ], 404);
         }
         return $this->resource ? new $this->resource($model) : response()->json($model, 200);
     }
