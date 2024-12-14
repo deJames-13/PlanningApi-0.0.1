@@ -15,6 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('title')->unique();
             $table->text('description')->nullable();
+
+            $table->string('status')->default('draft');
+
             $table->softDeletes();
             $table->timestamps();
         });

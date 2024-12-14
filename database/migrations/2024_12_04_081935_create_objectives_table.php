@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('title');
             $table->text('description')->nullable();
 
+            $table->string('status')->default('draft');
+
 
             // Parent: Sector
             $table->foreignId('sector_id')->constrained('sectors')->onDelete('cascade');

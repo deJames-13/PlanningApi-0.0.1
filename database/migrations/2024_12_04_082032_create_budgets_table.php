@@ -18,6 +18,8 @@ return new class extends Migration
             $table->year('current_year');
             $table->smallInteger('current_quarter')->default(1);
 
+            $table->string('status')->default('draft');
+
             // Has an optional parent: Sector
             // If no sector is provided, it means that the budget is for the whole department
             $table->foreignId('sector_id')->nullable()->constrained('sectors')->onDelete('cascade');
