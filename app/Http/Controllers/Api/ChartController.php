@@ -24,6 +24,7 @@ class ChartController extends Controller
 
         $bar1 = BarData::query();
         $bar1->where('status', 'published');
+        $bar1->load('particulars');
 
         
         $results = $bar1->orderBy($sort, $order)->paginate($perPage);
@@ -42,6 +43,7 @@ class ChartController extends Controller
         if ($sectorSlug == 'none'){
             $budgets = Budget::whereNull('sector_id');
             $budgets = $budgets->where('status', 'published')->get();
+            $budgets->load('annual');
             
             return response()->json([
                 'data' => BudgetResource::collection($budgets),

@@ -4,7 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
-
+use App\Http\Middleware\CorsMiddleware;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -27,6 +27,7 @@ return Application::configure(basePath: dirname(__DIR__))
             }
             return 'login';
         });
+        $middleware->append(CorsMiddleware::class);
         
 
     })
