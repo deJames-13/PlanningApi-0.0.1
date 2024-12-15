@@ -13,7 +13,7 @@ class BudgetController extends Controller
     protected $resource = BudgetResource::class;
     protected $searchableColumns = ['title', 'description', 'current_year'];
     protected $rules = [
-        'title' => 'required|string',
+        'title' => 'required|string|unique:budgets',
         'description' => 'nullable|string',
         'current_year' => 'required|integer',
         'current_quarter' => 'nullable|integer',
@@ -53,7 +53,10 @@ class BudgetController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validated = $request->validate($this->rules);
+        $rules = array_merge($this->rules, [
+            'title' => 'required|string|unique:budgets,title,' . $id,
+        ]);
+        $validated = $request->validate($rules);
         $annualData = [];
         if ($request->has('annual')) {
             $annualData = $request->annual;
