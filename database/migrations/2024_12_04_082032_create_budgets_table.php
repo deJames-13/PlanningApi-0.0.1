@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('budgets', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->string('title')->unique();
+            $table->string('slug');
             $table->text('description')->nullable();
             $table->year('current_year');
             $table->smallInteger('current_quarter')->default(1);

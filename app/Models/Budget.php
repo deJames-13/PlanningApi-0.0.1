@@ -23,4 +23,18 @@ class Budget extends Model
     {
         return $this->hasMany(BudgetAnnual::class);
     }
+
+
+         /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+        static::saving(function ($budget) {
+            $budget->slug = \Str::slug($budget->title);
+        });
+    }
 }
