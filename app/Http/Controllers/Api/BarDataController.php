@@ -19,14 +19,14 @@ class BarDataController extends Controller
         'particulars' => 'required|array',
         'particulars.*.title' => 'required|string|max:255',
         'particulars.*.description' => 'nullable|string',
-        'particulars.*.values' => 'required|array',
-        'particulars.*.values.*.year' => 'required|integer',
-        'particulars.*.values.*.target' => 'required|numeric',
-        'particulars.*.values.*.accomplishment' => 'required|numeric',
-        'particulars.*.values.*.quarters' => 'required|array',
-        'particulars.*.values.*.quarters.*.quarter' => 'required|integer',
-        'particulars.*.values.*.quarters.*.target' => 'required|numeric',
-        'particulars.*.values.*.quarters.*.accomplishment' => 'required|numeric',
+        'particulars.*.values' => 'nullable|array',
+        'particulars.*.values.*.year' => 'nullable|integer',
+        'particulars.*.values.*.target' => 'nullable|numeric',
+        'particulars.*.values.*.accomplishment' => 'nullable|numeric',
+        'particulars.*.values.*.quarters' => 'nullable|array',
+        'particulars.*.values.*.quarters.*.quarter' => 'nullable|integer',
+        'particulars.*.values.*.quarters.*.target' => 'nullable|numeric',
+        'particulars.*.values.*.quarters.*.accomplishment' => 'nullable|numeric',
         
 
     ];
@@ -38,13 +38,7 @@ class BarDataController extends Controller
     public function show($id)
     {
         $this->checkProperties(2);
-
         $model = $this->model::findOrFail($id);
-
-        if ($model->status === 'draft' && !request()->user()->hasRole('admin')) {
-            return response()->json(['message' => 'Unauthorized'], 401);
-        }
-
         return $this->resource ? new $this->resource($model) : response()->json($model, 200);
     }
 
@@ -60,7 +54,7 @@ class BarDataController extends Controller
             $values = $particular['values'];
             unset($particular['values']);
 
-            $particular = $barData->particular()->create($particular);
+            $particular = $barData->particulars()->create($particular);
 
             foreach ($values as $value) {
                 $quarters = $value['quarters'];
@@ -77,7 +71,11 @@ class BarDataController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validated = $request->validate($this->rules);
+        $rules = array_merge(
+            $this->rules,
+            ['title' => 'required|string|max:255|unique:bar_datas,title,' . $id]
+        );
+        $validated = $request->validate($rules);
         if (!isset($validated['status']) || $request->user()->hasRole('user')) {
             $validated['status'] = 'draft';
         }
@@ -87,13 +85,13 @@ class BarDataController extends Controller
         $barData = $this->model::findOrFail($id);
         $barData->update($validated);
 
-        $barData->particular()->forceDelete();
+        $barData->particulars()->forceDelete();
 
         foreach ($particulars as $particular) {
             $values = $particular['values'];
             unset($particular['values']);
 
-            $particular = $barData->particular()->create($particular);
+            $particular = $barData->particulars()->create($particular);
 
             foreach ($values as $value) {
                 $quarters = $value['quarters'];
