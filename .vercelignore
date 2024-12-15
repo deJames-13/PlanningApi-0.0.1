@@ -5,6 +5,7 @@
 /public/storage
 /storage/*.key
 /storage/pail
+/storage/logs
 /vendor
 .phpactor.json
 .phpunit.result.cache
@@ -18,3 +19,11 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+/tests
+/.vercel
+.pem
+.git
+
+.log
+
+
