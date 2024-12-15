@@ -42,7 +42,7 @@ class BarDataController extends Controller
             ], 404);
         }
 
-        $model->load('particulars');
+        $model->load('particular');
 
         return $this->resource ? new $this->resource($model) : response()->json($model, 200);
     }
