@@ -15,6 +15,7 @@ class BarDataController extends Controller
     protected $rules = [
         'title' => 'required|string|max:255',
         'description' => 'nullable|string',
+        'status' => 'nullable|string|in:draft,published',
         'particulars' => 'required|array',
         'particulars.*.title' => 'required|string|max:255',
         'particulars.*.description' => 'nullable|string',

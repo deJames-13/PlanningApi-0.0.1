@@ -16,6 +16,7 @@ class BudgetController extends Controller
         'title' => 'required|string|unique:budgets',
         'description' => 'nullable|string',
         'current_year' => 'required|integer',
+        'status' => 'nullable|string|in:draft,published',
         'current_quarter' => 'nullable|integer',
         'sector_id' => 'nullable|integer|exists:sectors,id',
         'annual' => 'nullable|array',
