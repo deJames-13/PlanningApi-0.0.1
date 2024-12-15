@@ -15,6 +15,7 @@ class BarDataResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            ...parent::toArray($request),
             'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
