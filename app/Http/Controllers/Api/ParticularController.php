@@ -49,7 +49,7 @@ class ParticularController extends Controller
         $particular = $this->model::findOrFail($id);
         $particular->update($validated);
 
-        $particular->values()->delete();
+        $particular->values()->forceDelete();
         $particular->values()->createMany($values);
         
 

@@ -51,7 +51,7 @@ class BudgetAnnualController extends Controller
         $budgetAnnual = $this->model::findOrFail($id);
         $budgetAnnual->update($validated);
 
-        $budgetAnnual->quarter()->delete();
+        $budgetAnnual->quarter()->forceDelete();
         $budgetAnnual->quarter()->createMany($quarters);
 
         return new $this->resource($budgetAnnual);

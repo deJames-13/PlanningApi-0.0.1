@@ -65,7 +65,10 @@ class BudgetController extends Controller
             return response()->json(['message' => 'Budget not found.'], 404);
         }
         $budget->update($validated);
-        $budget->annual()->delete();
+
+        $budget->annual()->forceDelete();
+
+
         foreach ($annualData as $annual) {
             $quarters = $annual['quarters'];
             unset($annual['quarters']);

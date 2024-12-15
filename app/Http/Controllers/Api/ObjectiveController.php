@@ -50,7 +50,8 @@ class ObjectiveController extends Controller
 
         $objective = $this->model::findOrFail($id);
         $objective->update($validated);
-        $objective->quarter()->delete();
+        
+        $objective->quarter()->forceDelete();
         $objective->quarter()->createMany($quarterData);
 
         return new $this->resource($objective);

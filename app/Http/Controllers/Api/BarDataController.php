@@ -59,7 +59,7 @@ class BarDataController extends Controller
         $barData = $this->model::findOrFail($id);
         $barData->update($validated);
 
-        $barData->particular()->delete();
+        $barData->particular()->forceDelete();
 
         foreach ($particulars as $particular) {
             $values = $particular['values'];

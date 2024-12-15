@@ -27,19 +27,33 @@ class ParticularValueController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate($this->rules);
+        $quarters = $validated['quarters'];
+        unset($validated['quarters']);
+
         $particular = Particular::find($validated['particular_id']);
         if (!$particular) {
             return response()->json(['message' => 'Particular not found'], 404);
         }
-        $particular->values()->create($validated);
+        $particular->values()->create($validated)->quarters()->createMany($quarters);
         return new $this->resource($particular->values);
     }
 
     public function update(Request $request, $id)
     {
         $validated = $request->validate($this->rules);
+        $quarters = $validated['quarters'];
+        unset($validated['quarters']);
+
+
         $particularValue = $this->model::findOrFail($id);
         $particularValue->update($validated);
+
+        $particularValue->quarters()->forceDelete();
+        $particularValue->quarters()->createMany($quarters);
+
+
+
+
         return new $this->resource($particularValue);
     }
 
