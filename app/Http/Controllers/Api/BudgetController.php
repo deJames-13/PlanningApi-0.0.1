@@ -58,6 +58,12 @@ class BudgetController extends Controller
             'title' => 'required|string|unique:budgets,title,' . $id,
         ]);
         $validated = $request->validate($rules);
+
+        if (!isset($validated['status']) || $request->user()->hasRole('user')) {
+            $validated['status'] = 'draft';
+        }
+
+
         $annualData = [];
         if ($request->has('annual')) {
             $annualData = $request->annual;
@@ -80,7 +86,6 @@ class BudgetController extends Controller
             $budgetAnnual->quarter()->createMany($quarters);
         }
         
-
         return new $this->resource($budget);
     }
 

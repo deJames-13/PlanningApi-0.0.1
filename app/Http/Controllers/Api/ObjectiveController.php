@@ -43,6 +43,9 @@ class ObjectiveController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate($this->rules);
+        if (!isset($validated['status']) || $request->user()->hasRole('user')) {
+            $validated['status'] = 'draft';
+        }
         $quarterData = [];
         if (isset($validated['quarters'])) {
             $quarterData = $validated['quarters'];

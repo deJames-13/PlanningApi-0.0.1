@@ -155,8 +155,13 @@ abstract class Controller
     public function destroy($id)
     {
         $this->checkProperties(2);
-
         $model = $this->model::findOrFail($id);
+
+        $isAdmin = request()->user()->hasRole(['admin', 'super-admin']);
+        if (!$isAdmin) {
+            $model->update(['status' => 'pending delete']);
+            return response()->json(['message' => 'Record is pending for deletion.'], 200);
+        } 
         $model->delete();
 
         return response()->json(null, 204);
@@ -167,6 +172,12 @@ abstract class Controller
         $this->checkProperties(2);
 
         $model = $this->model::withTrashed()->findOrFail($id);
+        $isAdmin = request()->user()->hasRole(['admin', 'super-admin']);
+        if (!$isAdmin) {
+            $model->update(['status' => 'pending restore']);
+            return response()->json(['message' => 'Record is pending for restore.'], 200);
+        } 
+
         $model->restore();
 
         return $this->resource ? new $this->resource($model) : response()->json($model, 200);

@@ -19,7 +19,6 @@ class BarDataController extends Controller
         'particulars' => 'required|array',
         'particulars.*.title' => 'required|string|max:255',
         'particulars.*.description' => 'nullable|string',
-        'particulars.*.type' => 'required|string',
         'particulars.*.values' => 'required|array',
         'particulars.*.values.*.year' => 'required|integer',
         'particulars.*.values.*.target' => 'required|numeric',
@@ -54,6 +53,9 @@ class BarDataController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate($this->rules);
+        if (!isset($validated['status']) || $request->user()->hasRole('user')) {
+            $validated['status'] = 'draft';
+        }
         $particulars = $validated['particulars'];
         unset($validated['particulars']);
 

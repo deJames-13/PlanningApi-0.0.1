@@ -23,6 +23,7 @@ class ChartController extends Controller
         $order = $request->order ?? 'asc';
 
         $bar1 = BarData::query();
+        $bar1->where('status', 'published');
 
         
         $results = $bar1->orderBy($sort, $order)->paginate($perPage);
@@ -52,8 +53,10 @@ class ChartController extends Controller
             ], 404);
         }
 
+        $budgets = $sector->budgets->where('status', 'published');
+
         return response()->json([
-            'data' => BudgetResource::collection($sector->budgets),
+            'data' => BudgetResource::collection($budgets),
         ]);
 
     }
@@ -68,8 +71,9 @@ class ChartController extends Controller
                 'message' => 'Sector not found',
             ], 404);
         }
+        $objectives = $sector->objectives->where('status', 'published');
         return response()->json([
-            'data' => ObjectiveResource::collection($sector->objectives),
+            'data' => ObjectiveResource::collection($objectives),
         ]);
     }
     
