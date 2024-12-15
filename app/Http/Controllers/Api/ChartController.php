@@ -40,7 +40,9 @@ class ChartController extends Controller
     {
         $sectorSlug = $request->sector_slug;
         if ($sectorSlug == 'none'){
-            $budgets = Budget::whereNull('sector_id')->get();
+            $budgets = Budget::whereNull('sector_id');
+            $budgets = $budgets->where('status', 'published')->get();
+            
             return response()->json([
                 'data' => BudgetResource::collection($budgets),
             ]);
