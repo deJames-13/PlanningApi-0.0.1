@@ -45,6 +45,8 @@ abstract class Controller
         $sort = $request->sort ?? 'id';
         $order = $request->order ?? 'asc';
         $search = $request->search ?? '';
+        $withLoad = $request->with ?? '';
+        $withLoad = explode(',', $withLoad);
 
         $query = $this->model::query();
 
@@ -62,6 +64,10 @@ abstract class Controller
                 }
             });
         }
+
+        // if (!empty($withLoad)) {
+        //     $query->with($withLoad);
+        // }
 
         $results = $query->orderBy($sort, $order)->paginate($perPage);
 
