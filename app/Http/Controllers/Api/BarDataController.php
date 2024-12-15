@@ -13,7 +13,7 @@ class BarDataController extends Controller
     protected $model = BarData::class;
     protected $resource = BarDataResource::class;
     protected $rules = [
-        'title' => 'required|string|max:255',
+        'title' => 'required|string|max:255|unique:bar_datas,title',
         'description' => 'nullable|string',
         'status' => 'nullable|string|in:draft,published',
         'particulars' => 'required|array',
@@ -23,6 +23,12 @@ class BarDataController extends Controller
         'particulars.*.values.*.year' => 'required|integer',
         'particulars.*.values.*.target' => 'required|numeric',
         'particulars.*.values.*.accomplishment' => 'required|numeric',
+        'particulars.*.values.*.quarters' => 'required|array',
+        'particulars.*.values.*.quarters.*.quarter' => 'required|integer',
+        'particulars.*.values.*.quarters.*.target' => 'required|numeric',
+        'particulars.*.values.*.quarters.*.accomplishment' => 'required|numeric',
+        
+
     ];
     protected $searchableColumns = [
         'title',
@@ -32,17 +38,12 @@ class BarDataController extends Controller
     public function show($id)
     {
         $this->checkProperties(2);
-        $isSlug = request()->is_slug ?? false;
-        try {
-            $model = $isSlug ? $this->model::where('slug', $id)->firstOrFail() : $this->model::findOrFail($id);
-        } catch (\Throwable $th) {
-            return response()->json([
-                'error' => 'Record not found',
-                'isSlug' => $isSlug,
-            ], 404);
-        }
 
-        $model->load('particular');
+        $model = $this->model::findOrFail($id);
+
+        if ($model->status === 'draft' && !request()->user()->hasRole('admin')) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
 
         return $this->resource ? new $this->resource($model) : response()->json($model, 200);
     }
@@ -62,8 +63,14 @@ class BarDataController extends Controller
             $particular = $barData->particular()->create($particular);
 
             foreach ($values as $value) {
-                $particular->values()->create($value);
+                $quarters = $value['quarters'];
+                unset($value['quarters']);
+
+                $newValue = $particular->values()->create($value);
+                $newValue->quarters()->createMany($quarters);
             }
+
+
         }
         return new $this->resource($barData);
     }
@@ -89,7 +96,13 @@ class BarDataController extends Controller
             $particular = $barData->particular()->create($particular);
 
             foreach ($values as $value) {
+                $quarters = $value['quarters'];
+                unset($value['quarters']);
+
                 $particular->values()->create($value);
+                $newValue = $particular->values()->create($value);
+                $newValue->quarters()->createMany($quarters);
+
             }
         }
         return new $this->resource($barData);

@@ -33,8 +33,14 @@ class ParticularController extends Controller
         if (!$barData) {
             return response()->json(['message' => 'Bar data not found'], 404);
         }
+        $particular = $barData->particular()->create($validated);
 
-        $barData->particular()->create($validated)->values()->createMany($values);
+        foreach ($values as $value) {
+            $quarters = $value['quarters'];
+            unset($value['quarters']);
+            $newValue = $particular->values()->create($value);
+            $newValue->quarters()->createMany($quarters);
+        }
 
         return new $this->resource($barData->particular);
     
@@ -50,7 +56,13 @@ class ParticularController extends Controller
         $particular->update($validated);
 
         $particular->values()->forceDelete();
-        $particular->values()->createMany($values);
+        foreach ($values as $value) {
+            $quarters = $value['quarters'];
+            unset($value['quarters']);
+
+            $newValue = $particular->values()->create($value);
+            $newValue->quarters()->createMany($quarters);
+        }
         
 
         return new $this->resource($particular);   

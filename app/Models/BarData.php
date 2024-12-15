@@ -13,7 +13,7 @@ class BarData extends Model
     protected $guarded = ['id'];
 
     // has Many: Particular
-    public function particular()
+    public function particulars()
     {
         return $this->hasMany(Particular::class);
     }

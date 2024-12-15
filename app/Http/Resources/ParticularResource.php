@@ -16,7 +16,7 @@ class ParticularResource extends JsonResource
     {
         return [
             ...parent::toArray($request),
-            'values' => $this->values,
+            'values' => ParticularValueResource::collection($this->values),
         ];
     }
 }

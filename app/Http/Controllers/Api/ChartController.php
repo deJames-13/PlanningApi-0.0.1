@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\BarData;
 use App\Models\Budget;
 use App\Models\Sector;
+use App\Http\Resources\BarDataResource;
 use App\Http\Resources\SectorResource;
 use App\Http\Resources\BudgetResource;
 use App\Http\Resources\ObjectiveResource;
@@ -24,14 +25,10 @@ class ChartController extends Controller
 
         $bar1 = BarData::query();
         $bar1->where('status', 'published');
-        $bar1->with('particular');
         $results = $bar1->orderBy($sort, $order)->paginate($perPage);
 
         return response()->json([
-            ...$results->toArray(),
-            'data' => $results->getCollection()->map(function ($item) {
-                return $item->mapItem();
-            }),
+            'data' => BarDataResource::collection($results),
         ]);
     }
 
