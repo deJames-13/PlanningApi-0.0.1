@@ -18,6 +18,10 @@ class ParticularValueController extends Controller
         'year' => 'required|integer',
         'target' => 'required|numeric',
         'accomplishment' => 'required|numeric',
+        'quarters' => 'nullable|array',
+        'quarters.*.quarter' => 'integer',
+        'quarters.*.target' => 'numeric',
+        'quarters.*.accomplishment' => 'numeric',
     ];
 
     public function store(Request $request)

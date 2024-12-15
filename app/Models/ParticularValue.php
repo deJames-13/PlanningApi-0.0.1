@@ -16,4 +16,10 @@ class ParticularValue extends Model
     {
         return $this->belongsTo(Particular::class);
     }
+
+    // hasMany: ParticularQuarter
+    public function quarters()
+    {
+        return $this->hasMany(ParticularQuarter::class);
+    }
 }

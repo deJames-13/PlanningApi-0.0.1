@@ -23,6 +23,17 @@ return new class extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
+        Schema::create('particular_values_quarter', function (Blueprint $table) {
+            $table->id();
+            $table->smallInteger('quarter');
+            $table->decimal('target', 10, 2)->default(0);
+            $table->decimal('accomplishment', 10, 2)->default(0);
+
+            $table->foreignId('particular_value_id')->constrained('particular_values')->onDelete('cascade');
+
+            $table->softDeletes();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -30,6 +41,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('particular_values_quarter');
         Schema::dropIfExists('particular_values');
     }
 };
