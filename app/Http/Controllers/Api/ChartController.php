@@ -26,6 +26,7 @@ class ChartController extends Controller
         $bar1->where('status', 'published');
         $bar1->with('particular');
         $results = $bar1->orderBy($sort, $order)->paginate($perPage);
+
         return response()->json([
             ...$results->toArray(),
             'data' => $results->getCollection()->map(function ($item) {
@@ -40,11 +41,11 @@ class ChartController extends Controller
         $sectorSlug = $request->sector_slug;
         if ($sectorSlug == 'none'){
             $budgets = Budget::whereNull('sector_id');
-            $budgets = $budgets->where('status', 'published')->get();
+            $budgets = $budgets->where('status', 'published');
             $budgets->with('annual');
             
             return response()->json([
-                'data' => BudgetResource::collection($budgets),
+                'data' => BudgetResource::collection($budgets->get()),
             ]);
         }
         
