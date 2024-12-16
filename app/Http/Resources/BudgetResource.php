@@ -17,9 +17,13 @@ class BudgetResource extends JsonResource
     {
         return [
             ...parent::toArray($request),
-            'sector' => $this->sector_id? $this->sector : null,
-            // 'annual' => $this->whenLoaded('annual', fn() => AnnualBudgetResource::collection($this->annual)),
-            'annual' => AnnualBudgetResource::collection($this->annual),
+            'annual' => $this->whenLoaded('annual', fn() => AnnualBudgetResource::collection($this->annual)),
+            'sector' => $this->whenLoaded('sector', function () {
+                return [
+                    'id' => $this->sector->id,
+                    'name' => $this->sector->name,
+                ];
+            }),
         ];
     }
 }

@@ -39,18 +39,21 @@ abstract class Controller
         $this->checkProperties(2);
 
         $perPage = $request->per_page ?? 10;
-        if ($perPage == 'all') {
-            $perPage = $this->model::count();
-        }
         $sort = $request->sort ?? 'id';
         $order = $request->order ?? 'asc';
         $search = $request->search ?? '';
-        $withLoad = $request->with ?? '';
-        $withLoad = explode(',', $withLoad);
+
 
         $query = $this->model::query();
+        
+        if ($perPage == 'all') {
+            return response()->json([
+                'data' => $query->get(),
+                'message' => 'All records'
+            ], 200); 
+        }
 
-        if (!empty($this->searchableColumns) && !empty($search)) {
+        if (!empty($this->searchableColumns) && !empty($search) && $search !== '') {
             $query->where(function ($q) use ($search) {
                 foreach ($this->searchableColumns as $column) {
                     if (strpos($column, '.') !== false) {
@@ -64,10 +67,6 @@ abstract class Controller
                 }
             });
         }
-
-        // if (!empty($withLoad)) {
-        //     $query->with($withLoad);
-        // }
 
         $results = $query->orderBy($sort, $order)->paginate($perPage);
 

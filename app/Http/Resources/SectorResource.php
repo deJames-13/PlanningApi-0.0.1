@@ -21,7 +21,7 @@ class SectorResource extends JsonResource
             ...parent::toArray($request),
             'objectives' => $this->whenLoaded('objectives', ObjectiveResource::collection($this->objectives)),
             'budgets' => $this->whenLoaded('budgets', BudgetResource::collection($this->budgets)),
-            'department' => $this->whenLoaded('department', new DepartmentResource($this->department)),
+            'department' => $this->department
 
 
         ];

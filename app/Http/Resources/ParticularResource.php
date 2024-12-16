@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\ParticularValueResource;
 
 class ParticularResource extends JsonResource
 {
@@ -16,7 +17,7 @@ class ParticularResource extends JsonResource
     {
         return [
             ...parent::toArray($request),
-            'values' => ParticularValueResource::collection($this->values),
+            'values' => $this->whenLoaded('values', ParticularValueResource::collection($this->values)),
         ];
     }
 }
