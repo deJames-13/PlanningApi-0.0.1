@@ -23,7 +23,12 @@ class ChartController extends Controller
         $sort = $request->sort ?? 'id';
         $order = $request->order ?? 'asc';
 
-        $bar1 = BarData::query();
+        $bar1 = BarData::with([
+            'particulars',
+            'particulars.values',
+            'particulars.values.quarters',
+
+        ]);
         $bar1->where('status', 'published');
         $results = $bar1->orderBy($sort, $order)->paginate($perPage);
 

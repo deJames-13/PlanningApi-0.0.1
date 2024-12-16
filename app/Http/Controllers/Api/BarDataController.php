@@ -34,8 +34,26 @@ class BarDataController extends Controller
         'title',
         'description',
     ];
-    protected $with = ['particulars'];
+    public function show($id)
+    {
+        $this->checkProperties(2);
+        $isSlug = request()->is_slug ?? false;
+        try {
+            $model = $isSlug ? $this->model::where('slug', $id)->firstOrFail() : $this->model::findOrFail($id);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'error' => 'Record not found',
+                'isSlug' => $isSlug,
+            ], 404);
+        }
 
+        $model->load([
+            'particulars',
+            'particulars.values',
+            'particulars.values.quarters',
+        ]);
+        return $this->resource ? new $this->resource($model) : response()->json($model, 200);
+    }
     public function store(Request $request)
     {
         $validated = $request->validate($this->rules);
