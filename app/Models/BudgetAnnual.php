@@ -17,7 +17,7 @@ class BudgetAnnual extends Model
     }
 
     // has Many: BudgetQuarter
-    public function quarter()
+    public function quarters()
     {
         return $this->hasMany(BudgetQuarter::class);
     }

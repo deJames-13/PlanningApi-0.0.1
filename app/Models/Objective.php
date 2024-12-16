@@ -18,7 +18,7 @@ class Objective extends Model
     }
     
     // has Many: ObjectiveQuarter
-    public function quarter()
+    public function quarters()
     {
         return $this->hasMany(ObjectiveQuarter::class);
     }
@@ -26,8 +26,8 @@ class Objective extends Model
     public function getTotal()
     {
         $total = [
-            'target' => $this->quarter->sum('target'),
-            'accomplishment' => $this->quarter->sum('accomplishment'),
+            'target' => $this->quarters->sum('target'),
+            'accomplishment' => $this->quarters->sum('accomplishment'),
             'percentage' => 0,
         ];
         $total['percentage'] = $total['target'] > 0 ? round(($total['accomplishment'] / $total['target']) * 100, 2) : 0;

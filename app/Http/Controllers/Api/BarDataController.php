@@ -34,13 +34,7 @@ class BarDataController extends Controller
         'title',
         'description',
     ];
-
-    public function show($id)
-    {
-        $this->checkProperties(2);
-        $model = $this->model::findOrFail($id);
-        return $this->resource ? new $this->resource($model) : response()->json($model, 200);
-    }
+    protected $with = ['particulars'];
 
     public function store(Request $request)
     {

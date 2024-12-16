@@ -20,8 +20,6 @@ class BarDataResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
-            'particulars' => $this->whenLoaded('particulars', ParticularResource::collection($this->particulars)),
-            
         ];
     }
 }

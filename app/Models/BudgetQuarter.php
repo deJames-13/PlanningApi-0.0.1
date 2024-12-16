@@ -10,7 +10,7 @@ class BudgetQuarter extends Model
     use SoftDeletes;    
     protected $guarded = ['id'];
     // belongsTo: BudgetAnnual
-    public function budgetAnnual()
+    public function annual()
     {
         return $this->belongsTo(BudgetAnnual::class);
     }

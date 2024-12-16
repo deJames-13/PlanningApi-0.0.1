@@ -4,7 +4,6 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\SectorResource;
 
 class DepartmentResource extends JsonResource
 {
@@ -17,7 +16,7 @@ class DepartmentResource extends JsonResource
     {
         return [
             ...parent::toArray($request),
-            'sectors' => $this->whenLoaded('sectors', SectorResource::collection($this->sectors)),
+            // 'sectors' => $this->whenLoaded('sectors', $this->sectors),
         ];
     }
 }

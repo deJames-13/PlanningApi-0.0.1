@@ -39,8 +39,6 @@ class ChartController extends Controller
         if ($sectorSlug == 'none'){
             $budgets = Budget::whereNull('sector_id');
             $budgets = $budgets->where('status', 'published');
-            $budgets->with('annual');
-            
             return response()->json([
                 'data' => BudgetResource::collection($budgets->get()),
             ]);
@@ -52,7 +50,6 @@ class ChartController extends Controller
                 'message' => 'Sector not found',
             ], 404);
         }
-
         $budgets = $sector->budgets->where('status', 'published');
 
         return response()->json([

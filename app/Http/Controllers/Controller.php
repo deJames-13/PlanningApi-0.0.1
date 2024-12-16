@@ -14,6 +14,7 @@ abstract class Controller
     protected $messages = [];
     protected $isApiResource = true;
     protected $searchableColumns = [];
+    protected $with = [];
 
     public function checkProperties($level = 3)
     {
@@ -42,9 +43,20 @@ abstract class Controller
         $sort = $request->sort ?? 'id';
         $order = $request->order ?? 'asc';
         $search = $request->search ?? '';
+        $with = $request->with ?? false;
 
 
-        $query = $this->model::query();
+
+        
+        // if with has length > 0
+        if (!empty($this->with) || !$with == 'none' || !$with == false) {
+            $query = $this->model::with($this->with);
+        } else {
+            $query = $this->model::query();
+        }
+        
+
+
         
         if ($perPage == 'all') {
             return response()->json([

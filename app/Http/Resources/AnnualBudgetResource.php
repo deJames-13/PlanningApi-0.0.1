@@ -16,7 +16,7 @@ class AnnualBudgetResource extends JsonResource
     {
         return [
             ...parent::toArray($request),
-            'quarters' => $this->quarter
+            'quarters' => $this->quarters
         ];
     }
 }

@@ -4,8 +4,6 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\ObjectiveResource;
-use App\Http\Resources\BudgetResource;
 use App\Http\Resources\DepartmentResource;
 
 class SectorResource extends JsonResource
@@ -19,11 +17,13 @@ class SectorResource extends JsonResource
     {
         return [
             ...parent::toArray($request),
-            'objectives' => $this->whenLoaded('objectives', ObjectiveResource::collection($this->objectives)),
-            'budgets' => $this->whenLoaded('budgets', BudgetResource::collection($this->budgets)),
-            'department' => $this->department
-
-
+            'department' => $this->department ? $this->department->only(['id', 'name']) : null,
+            'objectives' => $this->objectives ? $this->objectives->map(function ($objective) {
+                return $objective->only(['id', 'title']);
+            }) : null,
+            'budgets' => $this->budgets ? $this->budgets->map(function ($budget) {
+                return $budget->only(['id', 'title']);
+            }) : null,
         ];
     }
 }
