@@ -37,7 +37,7 @@ class BudgetAnnualController extends Controller
             return response()->json(['message' => 'Budget not found'], 404);
         }
 
-        $budget->annual()->create($validated)->quarter()->createMany($quarters);
+        $budget->annual()->create($validated)->quarters()->createMany($quarters);
 
         return new $this->resource($budget->annual);
     }
@@ -51,8 +51,8 @@ class BudgetAnnualController extends Controller
         $budgetAnnual = $this->model::findOrFail($id);
         $budgetAnnual->update($validated);
 
-        $budgetAnnual->quarter()->forceDelete();
-        $budgetAnnual->quarter()->createMany($quarters);
+        $budgetAnnual->quarters()->forceDelete();
+        $budgetAnnual->quarters()->createMany($quarters);
 
         return new $this->resource($budgetAnnual);
     }

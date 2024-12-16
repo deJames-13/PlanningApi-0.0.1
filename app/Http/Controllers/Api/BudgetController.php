@@ -46,7 +46,7 @@ class BudgetController extends Controller
             $quarters = $annual['quarters'];
             unset($annual['quarters']);
             $budgetAnnual = $budget->annual()->create($annual);
-            $budgetAnnual->quarter()->createMany($quarters);
+            $budgetAnnual->quarters()->createMany($quarters);
         }
 
         return new $this->resource($budget);
@@ -83,7 +83,7 @@ class BudgetController extends Controller
             $quarters = $annual['quarters'];
             unset($annual['quarters']);
             $budgetAnnual = $budget->annual()->create($annual);
-            $budgetAnnual->quarter()->createMany($quarters);
+            $budgetAnnual->quarters()->createMany($quarters);
         }
         
         return new $this->resource($budget);
