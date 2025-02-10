@@ -22,6 +22,7 @@
 - [x] Pending status should not be shown to user
 - [ ] particular 0 values
 - [ ] Table subtitles titles revise
+- [ ] Help system
 
 
 <!-- TESTing -->
