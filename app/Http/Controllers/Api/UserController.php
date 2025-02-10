@@ -69,6 +69,9 @@ class UserController extends Controller
         if ($requestingUser->id == $user->id) {
             return response()->json(['message' => 'You cannot delete yourself'], 422);
         }
+        if (!is_array($userRoles)) {
+            $userRoles = $userRoles->toArray();
+        }
         if (in_array('super-admin', $userRoles)) {
             return response()->json(['message' => 'You cannot delete a super-admin'], 422);
         }

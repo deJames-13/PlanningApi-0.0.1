@@ -19,6 +19,11 @@
 - [x] Table subtitles titles revise
 - [x] particular 0 values
 
+- [ ] multiple delete
+- [ ] multiple restore
+
+
+
 
 <!-- TESTing -->
 - [ ] users
