@@ -27,6 +27,9 @@ class ParticularValueController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate($this->rules);
+        if (!isset($validated['values'])){
+            $validated['quarters'] = [];
+        }
         $quarters = $validated['quarters'];
         unset($validated['quarters']);
 
@@ -41,6 +44,9 @@ class ParticularValueController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate($this->rules);
+        if (!isset($validated['values'])){
+            $validated['quarters'] = [];
+        }
         $quarters = $validated['quarters'];
         unset($validated['quarters']);
 

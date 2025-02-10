@@ -18,3 +18,6 @@
 - [x] 0 Values
 - [x] quarters fix
 - [x] Particulars Permission sfix
+
+- [ ] Pending status should not be shown to user
+- [ ] particular 0 values
