@@ -16,7 +16,7 @@ class BudgetController extends Controller
         'title' => 'required|string|unique:budgets',
         'description' => 'nullable|string',
         'current_year' => 'required|integer',
-        'status' => 'required|string|in:draft,published',
+        'status' => 'nullable|string|in:draft,published',
         'current_quarter' => 'nullable|integer',
         'sector_id' => 'nullable|integer|exists:sectors,id',
         'annual' => 'nullable|array',
@@ -35,6 +35,10 @@ class BudgetController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate($this->rules);
+        if (!isset($validated['status'])){
+            $validated['status'] = 'draft';
+        }
+
         $annualData = [];
         if ($request->has('annual')) {
             $annualData = $request->annual;

@@ -26,6 +26,7 @@ class ChartController extends Controller
         $bar1 = BarData::with([
             'particulars',
             'particulars.values',
+            'particulars.values.quarters',
 
         ]);
         $bar1->where('status', 'published');

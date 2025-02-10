@@ -15,7 +15,7 @@ class ObjectiveController extends Controller
         'title' => 'required|string|max:255',
         'description' => 'nullable|string',
         'sector_id' => 'required|exists:sectors,id',
-        'status' => 'required|string|in:draft,published',
+        'status' => 'nullable|string|in:draft,published',
         'quarters' => 'nullable|array',
         'quarters.*.quarter' => 'nullable|integer|between:1,4',
         'quarters.*.label' => 'nullable|string|max:255',
@@ -28,6 +28,9 @@ class ObjectiveController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate($this->rules);
+        if (!isset($validated['status'])){
+            $validated['status'] = 'draft';
+        }
         $quarterData = [];
         if (isset($validated['quarters'])) {
             $quarterData = $validated['quarters'];

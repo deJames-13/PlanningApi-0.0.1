@@ -56,6 +56,9 @@ class BarDataController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate($this->rules);
+        if (!isset($validated['status'])){
+            $validated['status'] = 'draft';
+        }
         $particulars = $validated['particulars'];
         unset($validated['particulars']);
 
