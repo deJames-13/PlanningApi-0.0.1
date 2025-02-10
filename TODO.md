@@ -21,3 +21,11 @@
 
 - [ ] Pending status should not be shown to user
 - [ ] particular 0 values
+- [ ] Table subtitles titles revise
+
+
+<!-- TESTing -->
+- [ ] users
+    - [ ] admin
+    - [ ] basic usr
+    - [ ] superuser
