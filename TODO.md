@@ -5,10 +5,6 @@
         - [ ] Bar Data
         - [ ] 
 
-<!-- Unimplemeneted -->
-- [ ] 
-    - [ ] Excel
-
 
 
 <!-- Changes -->
@@ -20,9 +16,8 @@
 - [x] Particulars Permission sfix
 
 - [x] Pending status should not be shown to user
-- [ ] particular 0 values
-- [ ] Table subtitles titles revise
-- [ ] Help system
+- [x] Table subtitles titles revise
+- [x] particular 0 values
 
 
 <!-- TESTing -->
@@ -30,3 +25,10 @@
     - [ ] admin
     - [ ] basic usr
     - [ ] superuser
+
+
+<!-- Unimplemeneted -->
+- [ ] Downloadables
+    - [ ] Excel
+
+- [ ] Help system

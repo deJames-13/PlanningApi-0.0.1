@@ -65,6 +65,9 @@ class BarDataController extends Controller
         $barData = $this->model::create($validated);
 
         foreach ($particulars as $particular) {
+            if (!isset($particular['values'])){
+                $particular['values'] = [];
+            }
             $values = $particular['values'];
             unset($particular['values']);
 
@@ -102,6 +105,9 @@ class BarDataController extends Controller
         $barData->particulars()->forceDelete();
 
         foreach ($particulars as $particular) {
+            if (!isset($particular['values'])){
+                $particular['values'] = [];
+            }
             $values = $particular['values'];
             unset($particular['values']);
 
