@@ -173,34 +173,49 @@ abstract class Controller
     public function destroy($id)
     {
         $this->checkProperties(2);
-        $model = $this->model::findOrFail($id);
-
+    
+        $ids = is_array($id) ? $id : [$id];
         $isAdmin = request()->user()->hasRole(['admin', 'super-admin']);
-        if (!$isAdmin) {
-            $model->update(['status' => 'pending delete']);
-            return response()->json(['message' => 'Record is pending for deletion.'], 200);
-        } 
-        $model->update(['status' => 'draft']);
-        $model->delete();
-
-        return response()->json(null, 204);
+        $responseMessages = [];
+    
+        foreach ($ids as $singleId) {
+            $model = $this->model::findOrFail($singleId);
+    
+            if (!$isAdmin) {
+                $model->update(['status' => 'pending delete']);
+                $responseMessages[] = "Record with ID $singleId is pending for deletion.";
+            } else {
+                $model->update(['status' => 'draft']);
+                $model->delete();
+                $responseMessages[] = "Record with ID $singleId has been deleted.";
+            }
+        }
+    
+        return response()->json(['messages' => $responseMessages], 200);
     }
 
     public function restore($id)
     {
         $this->checkProperties(2);
-
-        $model = $this->model::withTrashed()->findOrFail($id);
+    
+        $ids = is_array($id) ? $id : [$id];
         $isAdmin = request()->user()->hasRole(['admin', 'super-admin']);
-        if (!$isAdmin) {
-            $model->update(['status' => 'pending restore']);
-            return response()->json(['message' => 'Record is pending for restore.'], 200);
-        } 
-        $model->update(['status' => 'draft']);
-
-        $model->restore();
-
-        return $this->resource ? new $this->resource($model) : response()->json($model, 200);
+        $responseMessages = [];
+    
+        foreach ($ids as $singleId) {
+            $model = $this->model::withTrashed()->findOrFail($singleId);
+    
+            if (!$isAdmin) {
+                $model->update(['status' => 'pending restore']);
+                $responseMessages[] = "Record with ID $singleId is pending for restore.";
+            } else {
+                $model->update(['status' => 'draft']);
+                $model->restore();
+                $responseMessages[] = "Record with ID $singleId has been restored.";
+            }
+        }
+    
+        return response()->json(['messages' => $responseMessages], 200);
     }
 
 

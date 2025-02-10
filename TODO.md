@@ -19,8 +19,12 @@
 - [x] Table subtitles titles revise
 - [x] particular 0 values
 
+
+-- to fix somethings weird
 - [ ] multiple delete
 - [ ] multiple restore
+
+- [ ] thrashed restore not updating
 
 
 
