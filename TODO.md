@@ -25,7 +25,7 @@
 - [ ] multiple restore
 
 - [ ] thrashed restore not updating
-
+- [ ] dont delete published status
 
 
 

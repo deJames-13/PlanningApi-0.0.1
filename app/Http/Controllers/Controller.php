@@ -180,8 +180,11 @@ abstract class Controller
     
         foreach ($ids as $singleId) {
             $model = $this->model::findOrFail($singleId);
-    
-            if (!$isAdmin) {
+            // dont delete published records
+            if ($model->status == 'published') {
+                $responseMessages[] = "Record with ID $singleId is published and cannot be deleted.";
+            }
+            else if (!$isAdmin) {
                 $model->update(['status' => 'pending delete']);
                 $responseMessages[] = "Record with ID $singleId is pending for deletion.";
             } else {
