@@ -58,23 +58,23 @@ class UserController extends Controller
     }
 
     public function destroy($id) {
-        return response()->json(['message' => 'Method not implemented'], 501);  
+        // return response()->json(['message' => 'Method not implemented'], 501);  
 
-        // $user = User::find($id);
-        // if (!$user) {
-        //     return response()->json(['message' => 'User not found'], 404);
-        // }
-        // $requestingUser = auth()->user();
-        // $userRoles = $user->getRoleNames();
-        // if ($requestingUser->id == $user->id) {
-        //     return response()->json(['message' => 'You cannot delete yourself'], 422);
-        // }
-        // if (in_array('super-admin', $userRoles)) {
-        //     return response()->json(['message' => 'You cannot delete a super-admin'], 422);
-        // }
-        // if ($user->delete()) {
-        //     return response()->json(['message' => 'User deleted successfully'], 200);
-        // }
+        $user = User::find($id);
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+        $requestingUser = auth()->user();
+        $userRoles = $user->getRoleNames();
+        if ($requestingUser->id == $user->id) {
+            return response()->json(['message' => 'You cannot delete yourself'], 422);
+        }
+        if (in_array('super-admin', $userRoles)) {
+            return response()->json(['message' => 'You cannot delete a super-admin'], 422);
+        }
+        if ($user->delete()) {
+            return response()->json(['message' => 'User deleted successfully'], 200);
+        }
         
     }
 
