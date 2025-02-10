@@ -180,6 +180,7 @@ abstract class Controller
             $model->update(['status' => 'pending delete']);
             return response()->json(['message' => 'Record is pending for deletion.'], 200);
         } 
+        $model->update(['status' => 'draft']);
         $model->delete();
 
         return response()->json(null, 204);
@@ -195,6 +196,7 @@ abstract class Controller
             $model->update(['status' => 'pending restore']);
             return response()->json(['message' => 'Record is pending for restore.'], 200);
         } 
+        $model->update(['status' => 'draft']);
 
         $model->restore();
 
