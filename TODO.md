@@ -19,7 +19,7 @@
 - [x] quarters fix
 - [x] Particulars Permission sfix
 
-- [ ] Pending status should not be shown to user
+- [x] Pending status should not be shown to user
 - [ ] particular 0 values
 - [ ] Table subtitles titles revise
 
