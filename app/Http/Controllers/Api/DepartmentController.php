@@ -37,7 +37,7 @@ class DepartmentController extends Controller
     public function departmentNavList(Request $request)
     {
         $sectors = Sector::where('department_id', null)->get();
-        $departments = Department::all();
+        $departments = Department::with('sectors')->get();
         $departmentsWithSectors = $this->resource::collection($departments);
         
         return response()->json([

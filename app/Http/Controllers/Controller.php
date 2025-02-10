@@ -82,6 +82,7 @@ abstract class Controller
 
         $results = $query->orderBy($sort, $order)->paginate($perPage);
 
+
         return $this->resource ? $this->resource::collection($results) : response()->json($results, 200);
     }
 

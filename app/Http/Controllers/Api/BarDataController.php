@@ -50,7 +50,6 @@ class BarDataController extends Controller
         $model->load([
             'particulars',
             'particulars.values',
-            'particulars.values.quarters',
         ]);
         return $this->resource ? new $this->resource($model) : response()->json($model, 200);
     }
@@ -106,6 +105,9 @@ class BarDataController extends Controller
             $particular = $barData->particulars()->create($particular);
 
             foreach ($values as $value) {
+                if (!isset($value['quarters'])){
+                    $value['quarters'] = [];
+                }
                 $quarters = $value['quarters'];
                 unset($value['quarters']);
 

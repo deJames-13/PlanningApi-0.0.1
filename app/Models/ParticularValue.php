@@ -12,7 +12,7 @@ class ParticularValue extends Model
 
     
     // belongsTo: Particular
-    public function particular()
+    public function particulars()
     {
         return $this->belongsTo(Particular::class);
     }

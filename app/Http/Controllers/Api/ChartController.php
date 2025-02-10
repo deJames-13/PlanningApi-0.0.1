@@ -26,11 +26,12 @@ class ChartController extends Controller
         $bar1 = BarData::with([
             'particulars',
             'particulars.values',
-            'particulars.values.quarters',
 
         ]);
         $bar1->where('status', 'published');
         $results = $bar1->orderBy($sort, $order)->paginate($perPage);
+        \Log::info($results);
+
 
         return response()->json([
             'data' => BarDataResource::collection($results),

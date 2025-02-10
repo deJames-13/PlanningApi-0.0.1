@@ -16,7 +16,7 @@ class DepartmentResource extends JsonResource
     {
         return [
             ...parent::toArray($request),
-            // 'sectors' => $this->whenLoaded('sectors', $this->sectors),
+            'sectors' => $this->whenLoaded('sectors', $this->sectors),
         ];
     }
 }

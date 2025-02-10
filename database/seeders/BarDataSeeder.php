@@ -156,7 +156,7 @@ class BarDataSeeder extends Seeder
                 $values = $particular['values'];
                 unset($particular['values']);
 
-                $particular = $barData->particular()->create([
+                $particular = $barData->particulars()->create([
                     'title' => $particular['name'],
                 ]);
 

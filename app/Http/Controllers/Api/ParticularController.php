@@ -33,7 +33,7 @@ class ParticularController extends Controller
         if (!$barData) {
             return response()->json(['message' => 'Bar data not found'], 404);
         }
-        $particular = $barData->particular()->create($validated);
+        $particular = $barData->particulars()->create($validated);
 
         foreach ($values as $value) {
             $quarters = $value['quarters'];
