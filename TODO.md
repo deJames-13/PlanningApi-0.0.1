@@ -15,5 +15,6 @@
 - [x]  Quarterly BAR Data
 - [x]  Quarterly Budget Data
 - [x] Charts on Public Pages
-
+- [ ] 0 Values
+- [ ] quarters fix
 
