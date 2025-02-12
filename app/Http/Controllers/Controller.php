@@ -219,7 +219,7 @@ abstract class Controller
             }
         }
     
-        return response()->json(['messages' => $ids], 200);
+        return response()->json(['messages' => $responseMessages], 200);
     }
 
     public function forceDelete()
