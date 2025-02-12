@@ -102,7 +102,8 @@ Route::prefix('/charts')->group(function () use($REQUIRE_AUTH) {
 |--------------------------------------------------------------------------
 */
 Route::prefix('/reports')->group(function () use($REQUIRE_AUTH) {
-    Route::get('example', [App\Http\Controllers\PDF\ReportController::class, 'example']);
+    Route::get('example', [App\Http\Controllers\Pdf\ReportController::class, 'example']);
+    Route::get('sectors/{id}', [App\Http\Controllers\Pdf\ReportController::class, 'sectors']);
 });
 
 

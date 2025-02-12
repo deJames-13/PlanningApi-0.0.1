@@ -11,5 +11,4 @@
 
     <h2>Additional Content</h2>
     <p>This is some additional content that will appear on a new page.</p>
-
 @endsection

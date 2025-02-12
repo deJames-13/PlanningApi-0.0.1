@@ -15,6 +15,17 @@ class ReportController extends Controller
             'date' => date('m/d/Y')
         ];
         $pdf = \PDF::loadView('pdf.example' , $data);
-        return $pdf->download('pdf.example');
+        return $pdf->download('example.pdf');
+    }
+
+    public function sectors(string $id)
+    {
+        $data = [
+            'title' => 'Example Sector PDF',
+            'content' => 'This is an example PDF file.',
+            'date' => date('m/d/Y')
+        ];
+        $pdf = \PDF::loadView('pdf.example' , $data);
+        return $pdf->download("sector_$id.pdf");
     }
 }
