@@ -173,8 +173,8 @@ abstract class Controller
     public function destroy($id)
     {
         $this->checkProperties(2);
-    
-        $ids = is_array($id) ? $id : [$id];
+        $ids = str_contains($id, ',') ? explode(',', $id) : [$id];
+        $ids = is_array($ids) ? $ids : [$ids];
         $isAdmin = request()->user()->hasRole(['admin', 'super-admin']);
         $responseMessages = [];
     
@@ -201,7 +201,8 @@ abstract class Controller
     {
         $this->checkProperties(2);
     
-        $ids = is_array($id) ? $id : [$id];
+        $ids = str_contains($id, ',') ? explode(',', $id) : [$id];
+        $ids = is_array($ids) ? $ids : [$ids];
         $isAdmin = request()->user()->hasRole(['admin', 'super-admin']);
         $responseMessages = [];
     
@@ -218,7 +219,24 @@ abstract class Controller
             }
         }
     
+        return response()->json(['messages' => $ids], 200);
+    }
+
+    public function forceDelete()
+    {
+        $this->checkProperties(2);
+        $ids = request()->ids;
+        $ids = is_array($ids) ? $ids : [$ids];
+        $responseMessages = [];
+
+        foreach ($ids as $singleId) {
+            $model = $this->model::withTrashed()->findOrFail($singleId);
+            $model->forceDelete();
+            $responseMessages[] = "Record with ID $singleId has been permanently deleted.";
+        }
+
         return response()->json(['messages' => $responseMessages], 200);
+
     }
 
 
