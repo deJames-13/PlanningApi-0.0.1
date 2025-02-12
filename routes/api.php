@@ -96,6 +96,16 @@ Route::prefix('/charts')->group(function () use($REQUIRE_AUTH) {
 });
 
 
+/*
+|--------------------------------------------------------------------------
+| REPORTS PDF (Public/Protected)
+|--------------------------------------------------------------------------
+*/
+Route::prefix('/reports')->group(function () use($REQUIRE_AUTH) {
+    Route::get('example', [App\Http\Controllers\PDF\ReportController::class, 'example']);
+});
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -107,4 +117,6 @@ Route::prefix('public')->group(function(){
     Route::get('departments', [App\Http\Controllers\Api\DepartmentController::class, 'departmentNavList']);
     Route::get('sectors', [App\Http\Controllers\Api\SectorController::class, 'sectorList']);
 });
+
+
 
