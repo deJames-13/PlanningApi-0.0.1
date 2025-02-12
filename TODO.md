@@ -1,7 +1,7 @@
 <!-- Changed to Draft Publish -->
 - [ ] Schema
-    - [ ] Statuses          - 'pending delete' 'pending create' 'pending restore'
-        - [ ] Objectives
+    - [x] Statuses          - 'pending delete' 'pending create' 'pending restore'
+        - [x] Objectives
         - [ ] Bar Data
         - [ ] 
 
@@ -19,13 +19,20 @@
 - [x] Table subtitles titles revise
 - [x] particular 0 values
 
+- [ ] Report Generation
+    - [ ] per office
+
+- [ ] Year Deletion
+    - [ ]
+
+- [ ] 
 
 -- to fix somethings weird
 - [x] multiple delete
 - [x] multiple restore
 - [x] dont delete published status
 
-- [ ] thrashed restore not updating
+- [x] thrashed restore not updating
 
 
 
