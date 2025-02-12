@@ -21,11 +21,11 @@
 
 
 -- to fix somethings weird
-- [ ] multiple delete
-- [ ] multiple restore
+- [x] multiple delete
+- [x] multiple restore
+- [x] dont delete published status
 
 - [ ] thrashed restore not updating
-- [ ] dont delete published status
 
 
 
