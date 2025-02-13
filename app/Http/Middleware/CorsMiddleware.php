@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class CorsMiddleware
 {
@@ -16,6 +17,10 @@ class CorsMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         $response = $next($request);
+
+        if ($response instanceof BinaryFileResponse) {
+            return $response;
+        }
 
         return $response
             ->header('Access-Control-Allow-Origin', env('FRONTEND_URL', 'https://planning-dashboard.vercel.app'))

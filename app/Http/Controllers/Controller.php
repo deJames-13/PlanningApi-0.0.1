@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-
+use Maatwebsite\Excel\Facades\Excel;
 // General Controller class
 abstract class Controller
 {
@@ -15,6 +15,7 @@ abstract class Controller
     protected $isApiResource = true;
     protected $searchableColumns = [];
     protected $with = [];
+    protected $ExportClass = null;
 
     public function checkProperties($level = 3)
     {
@@ -257,6 +258,19 @@ abstract class Controller
             'data' => $data,
             'message' => 'Custom response'
         ], $status);
+    }
+
+    
+    public function export(string $id, string $type)
+    {
+        $this->checkProperties(2);
+        
+        if (is_null($this->ExportClass)) {
+            throw new \Exception('Export class is not set.');
+        }
+
+        return Excel::download(new $this->ExportClass, 'test.xlsx', \Maatwebsite\Excel\Excel::XLSX);;
+
     }
 
 }
