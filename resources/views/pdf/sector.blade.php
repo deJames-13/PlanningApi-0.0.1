@@ -1,4 +1,4 @@
-@extends('layouts.pdf')
+@extends('layout.index')
 
 @section('title', $title)
 

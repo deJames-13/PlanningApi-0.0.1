@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Budget;
 use App\Http\Resources\BudgetResource;
+use App\Exports\BudgetExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class BudgetController extends Controller
 {
@@ -91,6 +94,11 @@ class BudgetController extends Controller
         }
         
         return new $this->resource($budget);
+    }
+
+    public function export(string $id, string $type)
+    {
+        return Excel::download(new BudgetExport, 'budgets.xlsx',  \Maatwebsite\Excel\Excel::XLSX);
     }
 
 }

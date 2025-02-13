@@ -22,17 +22,23 @@
 - [ ] Report Generation
     - [ ] per office
 
-- [ ] Year Deletion
-    - [ ] 
+- [ ] Yearly Reports
+    - [ ] maybe have a page where it can be seen by year
+    - [ ] bar data is by year       - delete by year
+    - [ ] budget is by year         - delete by year
 
-- [ ] 
 
 -- to fix somethings weird
-- [x] multiple delete
+<!-- - [x] multiple delete
 - [x] multiple restore
-- [x] dont delete published status
-
 - [x] thrashed restore not updating
+- [x] dont delete published status
+- [x] bar chart dropdown doubles  -->
+
+- [ ] make the year option a slider or number
+- [ ] make any date an easier option
+
+
 
 
 
