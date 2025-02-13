@@ -92,8 +92,16 @@ Route::prefix('/reports')->group(function () use($REQUIRE_AUTH) {
     Route::get('example', [App\Http\Controllers\Pdf\ReportController::class, 'example']);
     Route::get('sectors/{id}', [App\Http\Controllers\Pdf\ReportController::class, 'sectors']);
 });
-Route::prefix('/exports')->group(function () use($REQUIRE_AUTH) {
-    Route::get('budgets/{id}/{type}', [App\Http\Controllers\Api\BudgetController::class, 'export']);
+Route::prefix('/exports')->group(function () use($REQUIRE_AUTH, $resources) {
+    foreach ($resources as $resource => $endpoint) {
+        try {
+            $controller = $endpoint['controller'];
+            Route::get("$resource/{id}/{type}", [$controller, 'export']);
+            \Log::info("Export $resource registered successfully");
+        } catch (\Throwable $th) {
+            \Log::error("Error registering export $resource: " . $th->getMessage());
+        }
+    }
     
 });
 

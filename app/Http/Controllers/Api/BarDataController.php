@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\BarData;
 use App\Http\Resources\BarDataResource;
+use App\Exports\BarDataExport;
 
 class BarDataController extends Controller
 {
@@ -34,6 +35,9 @@ class BarDataController extends Controller
         'title',
         'description',
     ];
+    protected $ExportClass = BarDataExport::class;
+
+
     public function show($id)
     {
         $this->checkProperties(2);
