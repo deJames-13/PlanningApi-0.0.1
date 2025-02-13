@@ -83,6 +83,20 @@ Route::middleware($REQUIRE_AUTH)->group(function () use($resources, $REQUIRE_AUT
         }
     }
 });
+/*
+|--------------------------------------------------------------------------
+| REPORTS PDF (Public/Protected)
+|--------------------------------------------------------------------------
+*/
+Route::prefix('/reports')->group(function () use($REQUIRE_AUTH) {
+    Route::get('example', [App\Http\Controllers\Pdf\ReportController::class, 'example']);
+    Route::get('sectors/{id}', [App\Http\Controllers\Pdf\ReportController::class, 'sectors']);
+});
+Route::prefix('/exports')->group(function () use($REQUIRE_AUTH) {
+    Route::get('budgets/{id}/{type}', [App\Http\Controllers\Api\BudgetController::class, 'export']);
+    
+});
+
 
 /*
 |--------------------------------------------------------------------------
@@ -95,30 +109,6 @@ Route::prefix('/charts')->group(function () use($REQUIRE_AUTH) {
     Route::get('objectives', [App\Http\Controllers\Api\ChartController::class, 'objectives']);
 });
 
-
-/*
-|--------------------------------------------------------------------------
-| REPORTS PDF (Public/Protected)
-|--------------------------------------------------------------------------
-*/
-Route::prefix('/reports')->group(function () use($REQUIRE_AUTH) {
-    Route::get('example/pdf', [App\Http\Controllers\Pdf\ReportController::class, 'example']);
-    Route::get('sectors/{id}/pdf', [App\Http\Controllers\Pdf\ReportController::class, 'sectors']);
-
-
-    Route::get('budgets/{id}/{type}', [App\Http\Controllers\Api\BudgetController::class, 'export']);
-    
-});
-
-/*
-|--------------------------------------------------------------------------
-| REPORTS EXCEL CSS (Public/Protected)
-|--------------------------------------------------------------------------
-*/
-Route::prefix('/reports')->group(function () use($REQUIRE_AUTH) {
-    Route::get('budgets', [App\Http\Controllers\Pdf\ReportController::class, 'example']);
-    Route::get('sectors/{id}', [App\Http\Controllers\Pdf\ReportController::class, 'sectors']);
-});
 
 
 

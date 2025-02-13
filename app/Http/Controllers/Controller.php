@@ -264,12 +264,20 @@ abstract class Controller
     public function export(string $id, string $type)
     {
         $this->checkProperties(2);
-        
         if (is_null($this->ExportClass)) {
             throw new \Exception('Export class is not set.');
         }
+        if (!in_array($type, ['xls', 'xlsx', 'csv'])) {
+            throw new \Exception('Invalid export type.');
+        }
 
-        return Excel::download(new $this->ExportClass, 'test.xlsx', \Maatwebsite\Excel\Excel::XLSX);;
+        $fileType = \Maatwebsite\Excel\Excel::XLSX;
+        if ($type == 'csv') {
+            $fileType = \Maatwebsite\Excel\Excel::CSV;
+        }
+        
+
+        return Excel::download(new $this->ExportClass, 'test.xlsx', $fileType);;
 
     }
 
