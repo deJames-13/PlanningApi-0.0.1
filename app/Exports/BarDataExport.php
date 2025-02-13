@@ -2,16 +2,30 @@
 
 namespace App\Exports;
 
-use Maatwebsite\Excel\Concerns\FromCollection;
+use Illuminate\Contracts\View\View;
+use Maatwebsite\Excel\Concerns\FromView;
 use App\Models\BarData;
 
-class BarDataExport implements FromCollection
+class BarDataExport implements FromView
 {
-    /**
-    * @return \Illuminate\Support\Collection
-    */
-    public function collection()
+    public function view(): View
     {
-        return BarData::all();
+        return view('exports.example', [
+            'data' => [
+                [
+                    'title' => 'Title 1',
+                    'description' => 'Description 1',
+                ],
+                [
+                    'title' => 'Title 2',
+                    'description' => 'Description 2',
+                ],
+                [
+                    'title' => 'Title 3',
+                    'description' => 'Description 3',
+                ],
+            ]
+        ]);
     }
+
 }
