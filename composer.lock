@@ -22,8 +22,6 @@
             },
             "require": {
                 "dompdf/dompdf": "^3.0",
-                "barryvdh/laravel-dompdf": "^3.1",
-                "maatwebsite/excel": "^3.1",
                 "illuminate/support": "^9|^10|^11",
                 "php": "^8.1"
             },
