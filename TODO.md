@@ -37,6 +37,7 @@
 
 - [ ] make the year option a slider or number
 - [ ] make any date an easier option
+- [x] particulars duplication
 
 
 

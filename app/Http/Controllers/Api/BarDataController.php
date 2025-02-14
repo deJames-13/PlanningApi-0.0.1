@@ -37,6 +37,19 @@ class BarDataController extends Controller
     ];
     protected $ExportClass = BarDataExport::class;
 
+    public function byYear($year)
+    {
+        $this->checkProperties(2);
+        
+        return response()->json([
+            'data' => $year,
+        ], 200);
+    }
+
+    public function index(Request $request)
+    {
+        return parent::index($request);
+    }
 
     public function show($id)
     {
@@ -106,7 +119,11 @@ class BarDataController extends Controller
         $barData = $this->model::findOrFail($id);
         $barData->update($validated);
 
+        $barData->particulars->each(function ($particular) {
+            $particular->values()->forceDelete();
+        });
         $barData->particulars()->forceDelete();
+
 
         foreach ($particulars as $particular) {
             if (!isset($particular['values'])){
@@ -124,7 +141,6 @@ class BarDataController extends Controller
                 $quarters = $value['quarters'];
                 unset($value['quarters']);
 
-                $particular->values()->create($value);
                 $newValue = $particular->values()->create($value);
                 $newValue->quarters()->createMany($quarters);
 

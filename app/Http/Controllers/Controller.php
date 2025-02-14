@@ -46,18 +46,16 @@ abstract class Controller
         $search = $request->search ?? '';
         $with = $request->with ?? false;
 
-
-
+        if ($search !== '') {
+            $request->merge(['page' => 1]);
+        }
         
-        // if with has length > 0
         if (!empty($this->with) || !$with == 'none' || !$with == false) {
             $query = $this->model::with($this->with);
         } else {
             $query = $this->model::query();
         }
         
-
-
         
         if ($perPage == 'all') {
             return response()->json([
@@ -95,6 +93,9 @@ abstract class Controller
         $sort = $request->sort ?? 'id';
         $order = $request->order ?? 'asc';
         $search = $request->search ?? '';
+        if ($search !== '') {
+            $request->merge(['page' => 1]);
+        }
 
         $query = $this->model::onlyTrashed();
 
@@ -119,6 +120,9 @@ abstract class Controller
         $sort = $request->sort ?? 'id';
         $order = $request->order ?? 'asc';
         $search = $request->search ?? '';
+        if ($search !== '') {
+            $request->merge(['page' => 1]);
+        }
 
         $query = $this->model::withTrashed();
 
@@ -240,8 +244,7 @@ abstract class Controller
 
     }
 
-
-
+    
     public function returnRequest($request)
     {
         return $request->all();
