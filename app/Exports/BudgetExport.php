@@ -2,16 +2,21 @@
 
 namespace App\Exports;
 
+use Illuminate\Contracts\View\View;
+use Maatwebsite\Excel\Concerns\FromView;
 use App\Models\Budget;
-use Maatwebsite\Excel\Concerns\FromCollection;
+use App\Models\BarData;
 
-class BudgetExport implements FromCollection
+class BudgetExport implements FromView
 {
-    /**
-    * @return \Illuminate\Support\Collection
-    */
-    public function collection()
+    public function view(): View
     {
-        return Budget::all();
+        return view('exports.budgets', [
+            'data' => Budget::with([
+                'annual',
+                'annual.quarters',
+            ])->get()
+            ]
+        );
     }
 }

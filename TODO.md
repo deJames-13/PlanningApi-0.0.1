@@ -20,11 +20,13 @@
 - [x] particular 0 values
 
 - [ ] Report Generation
-    - [ ] BAR 
+    - [x] BAR 
+    - [] BAR per year ?
     - [ ] budgets per office
-    - [ ] objectives per office
-    - [ ] budgets & objectives per office
     - [ ] overall budgets
+    - [ ] objectives per office
+    - [ ] overall objectives
+    - [ ] budgets & objectives per office
 
 - [ ] Yearly Reports
     - [ ] maybe have a page where it can be seen by year
@@ -42,9 +44,12 @@
 - [ ] make the year option a slider or number
 - [ ] make any date an easier option
 - [x] particulars duplication
+- [x] budgets chart year is not ordered
 
 
-
+<!-- RESEARCH -->
+- [ ] research cPanel 
+- [ ]
 
 
 

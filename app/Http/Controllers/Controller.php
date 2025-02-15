@@ -14,8 +14,12 @@ abstract class Controller
     protected $messages = [];
     protected $isApiResource = true;
     protected $searchableColumns = [];
-    protected $with = [];
     protected $ExportClass = null;
+    protected $with = [];
+    protected $orderBy = 'id';
+    protected $order = 'asc';
+    protected $perPage = 10;
+
 
     public function checkProperties($level = 3)
     {
@@ -40,9 +44,9 @@ abstract class Controller
     {
         $this->checkProperties(2);
 
-        $perPage = $request->per_page ?? 10;
-        $sort = $request->sort ?? 'id';
-        $order = $request->order ?? 'asc';
+        $perPage = $request->per_page ?? $this->perPage;
+        $sort = $request->sort ?? $this->orderBy;
+        $order = $request->order ?? $this->order;
         $search = $request->search ?? '';
         $with = $request->with ?? false;
 

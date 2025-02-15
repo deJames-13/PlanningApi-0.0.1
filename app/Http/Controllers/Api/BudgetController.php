@@ -14,6 +14,7 @@ class BudgetController extends Controller
 {
     protected $model = Budget::class;
     protected $resource = BudgetResource::class;
+    protected $ExportClass = BudgetExport::class;
     protected $searchableColumns = ['title', 'description', 'current_year'];
     protected $rules = [
         'title' => 'required|string|unique:budgets',
@@ -34,8 +35,7 @@ class BudgetController extends Controller
         'annual.*.quarters.*.obligated' => 'numeric',
         'annual.*.quarters.*.utilization_rate' => 'numeric',
     ];
-    protected $ExportClass = BudgetExport::class;
-    
+
     public function store(Request $request)
     {
         $validated = $request->validate($this->rules);
