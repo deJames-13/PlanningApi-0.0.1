@@ -20,7 +20,11 @@
 - [x] particular 0 values
 
 - [ ] Report Generation
-    - [ ] per office
+    - [ ] BAR 
+    - [ ] budgets per office
+    - [ ] objectives per office
+    - [ ] budgets & objectives per office
+    - [ ] overall budgets
 
 - [ ] Yearly Reports
     - [ ] maybe have a page where it can be seen by year
