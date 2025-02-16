@@ -32,7 +32,6 @@ class ChartController extends Controller
         ]);
         $bar1->where('status', 'published');
         $results = $bar1->orderBy($sort, $order)->paginate($perPage);
-        \Log::info($results);
 
 
         return response()->json([
@@ -53,7 +52,7 @@ class ChartController extends Controller
             ]);
         }
 
-        if ($isId){
+        if ($isId =='true'){
             $sector = Sector::find($sectorSlug);
         }
         else {
@@ -62,7 +61,7 @@ class ChartController extends Controller
         
         if (!$sector) {
             return response()->json([
-                'message' => 'Sector not found',
+                'message' => "Sector with " . ($isId =='true' ? "id" : "slug") . " $sectorSlug not found.",
             ], 404);
         }
         $budgets = $sector->budgets->where('status', 'published');
@@ -87,7 +86,7 @@ class ChartController extends Controller
             ]);
         }
 
-        if ($isId){
+        if ($isId == 'true'){
             $sector = Sector::find($sectorSlug);
         }
         else {
@@ -96,7 +95,7 @@ class ChartController extends Controller
 
         if (!$sector) {
             return response()->json([
-                'message' => 'Sector not found',
+                'message' => "Sector with " . ($isId =='true' ? "id" : "slug") . " $sectorSlug not found.",
             ], 404);
         }
         $objectives = $sector->objectives->where('status', 'published');

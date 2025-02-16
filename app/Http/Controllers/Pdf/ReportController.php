@@ -24,8 +24,6 @@ class ReportController extends Controller
         if(!$sector) {
             return response()->json(['message' => 'Sector not found'], 404);
         }
-
-        \Log::info('Sector PDF generated', ['sector' => $sector]);
         $data = [
             'title' => 'Sector PDF',
             'content' => 'This is a sector PDF file.',
