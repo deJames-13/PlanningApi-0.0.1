@@ -20,7 +20,7 @@ return new class extends Migration
 
 
             // Parent: Sector
-            $table->foreignId('sector_id')->constrained('sectors')->onDelete('cascade');
+            $table->foreignId('sector_id')->nullable()->constrained('sectors')->onDelete('cascade');
 
             $table->softDeletes();
             $table->timestamps();

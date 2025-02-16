@@ -1,9 +1,4 @@
-<!-- Changed to Draft Publish -->
-- [ ] Schema
-    - [x] Statuses          - 'pending delete' 'pending create' 'pending restore'
-        - [x] Objectives
-        - [ ] Bar Data
-        - [ ] 
+
 
 
 
@@ -24,15 +19,15 @@
     - [x] overall budgets
     - [x] budgets & objectives per office
 
-    - [ ] budgets per office
-    - [ ] objectives per office
-    - [ ] overall objectives
-    - [] BAR per year ?
+    - [x] budgets per office
+    - [x] objectives per office
+    <!-- - [ ] overall objectives -->
+    <!-- - [] BAR per year ? -->
 
 - [ ] Yearly Reports
     - [ ] maybe have a page where it can be seen by year
-    - [ ] bar data is by year       - delete by year
-    - [ ] budget is by year         - delete by year
+    - [x] bar data is by year       - delete by year
+    - [x] budget is by year         - delete by year
 
 
 -- to fix somethings weird
@@ -42,12 +37,21 @@
 - [x] dont delete published status
 - [x] bar chart dropdown doubles  -->
 
-- [ ] make the year option a slider or number
-- [ ] make any date an easier option
+- [x] make the year option a slider or number
+- [x] make any date an easier option
 - [x] particulars duplication
 - [x] budgets chart year is not ordered
 - [ ] filtering options
+- [ ] batch publish
+- [ ] batch pending delete
+- [ ] batch pending restore
+- [ ] allow no sector objective
+
+<!-- IMPROVEMENTS -->
+- [ ] Main Dashboard Page lacks details
+- [ ] Main Top Bar searching 
 - [ ]
+
 
 
 <!-- RESEARCH -->
@@ -64,7 +68,7 @@
 
 
 <!-- Unimplemeneted -->
-- [ ] Downloadables
-    - [ ] Excel
+- [x] Downloadables
+    - [x] Excel
 
 - [ ] Help system

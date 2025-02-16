@@ -26,7 +26,7 @@ class ObjectiveController extends Controller
     protected $rules = [
         'title' => 'required|string|max:255',
         'description' => 'nullable|string',
-        'sector_id' => 'required|exists:sectors,id',
+        'sector_id' => 'nullable|exists:sectors,id',
         'status' => 'nullable|string|in:draft,published',
         'quarters' => 'nullable|array',
         'quarters.*.quarter' => 'nullable|integer|between:1,4',

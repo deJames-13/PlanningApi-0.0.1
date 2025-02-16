@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\BarData;
 use App\Models\Budget;
 use App\Models\Sector;
+use App\Models\Objective;
 use App\Http\Resources\BarDataResource;
 use App\Http\Resources\SectorResource;
 use App\Http\Resources\BudgetResource;
@@ -43,6 +44,7 @@ class ChartController extends Controller
     public function budgets(Request $request)
     {
         $sectorSlug = $request->sector_slug;
+        $isId = $request->isId ?? false;
         if ($sectorSlug == 'none'){
             $budgets = Budget::whereNull('sector_id');
             $budgets = $budgets->where('status', 'published');
@@ -50,8 +52,14 @@ class ChartController extends Controller
                 'data' => BudgetResource::collection($budgets->get()),
             ]);
         }
+
+        if ($isId){
+            $sector = Sector::find($sectorSlug);
+        }
+        else {
+            $sector = Sector::where('slug', $sectorSlug)->first();
+        }
         
-        $sector = Sector::where('slug', $sectorSlug)->first();
         if (!$sector) {
             return response()->json([
                 'message' => 'Sector not found',
@@ -69,7 +77,23 @@ class ChartController extends Controller
     public function objectives(Request $request)
     {
         $sectorSlug = $request->sector_slug;
-        $sector = Sector::where('slug', $sectorSlug)->first();
+        $isId = $request->isId ?? false;
+
+        if ($sectorSlug == 'none'){
+            $objectives = Objective::whereNull('sector_id');
+            $objectives = $objectives->where('status', 'published');
+            return response()->json([
+                'data' => ObjectiveResource::collection($objectives->get()),
+            ]);
+        }
+
+        if ($isId){
+            $sector = Sector::find($sectorSlug);
+        }
+        else {
+            $sector = Sector::where('slug', $sectorSlug)->first();
+        }
+
         if (!$sector) {
             return response()->json([
                 'message' => 'Sector not found',
@@ -80,6 +104,13 @@ class ChartController extends Controller
             'data' => ObjectiveResource::collection($objectives),
         ]);
     }
+
+    // Top Ten Sectors with High Total Accomplishment Percentage
+
+
+    // Top Ten Sectors with High Total Utilzation Rate Percentage
+
+    // 
     
 }
 
