@@ -20,8 +20,11 @@ class SectorExport implements FromView
         
         $data = Sector::with([
             'department',
-            'objectives',
             'budgets',
+            'budgets.annual',
+            'budgets.annual.quarters',
+            'objectives',
+            'objectives.quarters',
         ]);
 
         if ($this->id) {
