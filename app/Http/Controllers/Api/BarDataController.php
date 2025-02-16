@@ -13,6 +13,9 @@ class BarDataController extends Controller
     
     protected $model = BarData::class;
     protected $resource = BarDataResource::class;
+    protected $ExportClass = BarDataExport::class;
+
+
     protected $rules = [
         'title' => 'required|string|max:255|unique:bar_datas,title',
         'description' => 'nullable|string',
@@ -36,7 +39,11 @@ class BarDataController extends Controller
         'description',
         'status',
     ];
-    protected $ExportClass = BarDataExport::class;
+    protected $with = [
+        'particulars',
+        'particulars.values',
+        'particulars.values.quarters',
+    ];
 
     public function byYear($year)
     {
@@ -68,6 +75,7 @@ class BarDataController extends Controller
         $model->load([
             'particulars',
             'particulars.values',
+            'particulars.values.quarters',
         ]);
         return $this->resource ? new $this->resource($model) : response()->json($model, 200);
     }

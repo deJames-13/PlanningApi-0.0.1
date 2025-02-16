@@ -10,12 +10,14 @@ abstract class Controller
 {
     protected $model = null;
     protected $resource = null;
+    protected $ExportClass = null;
+    protected $isApiResource = true;
+
     protected $rules = [];
     protected $messages = [];
-    protected $isApiResource = true;
     protected $searchableColumns = [];
-    protected $ExportClass = null;
     protected $with = [];
+    
     protected $orderBy = 'id';
     protected $order = 'asc';
     protected $perPage = 10;
