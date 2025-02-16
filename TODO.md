@@ -41,15 +41,17 @@
 - [x] make any date an easier option
 - [x] particulars duplication
 - [x] budgets chart year is not ordered
+- [x] allow no sector objective
 - [ ] filtering options
+
 - [ ] batch publish
-- [ ] batch pending delete
+<!-- ONGOING -->
+- [ ] batch pending delete   <!-- GOTO: api/resources.js -->
 - [ ] batch pending restore
-- [ ] allow no sector objective
 
 <!-- IMPROVEMENTS -->
 - [ ] Main Dashboard Page lacks details
-- [ ] Main Top Bar searching 
+- [x] Main Top Bar searching 
 - [ ]
 
 

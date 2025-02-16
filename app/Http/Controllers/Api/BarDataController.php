@@ -188,22 +188,59 @@ class BarDataController extends Controller
             
         ], 200);
     }
+    public function restoreAllValuesWithYear(string $year){
+
+        $this->checkProperties(2);
+        
+        // $budgets = Budget::whereHas('annual', function ($query) use ($year) {
+        //     $query->where('year', $year);
+        // })->get();
+
+        // foreach ($budgets as $budget) {
+        //     $budget->annual()->where('year', $year)->forceDelete();
+        // }
+
+        return response()->json([
+            'message' => 'Annual bar data for year ' . $year . ' has been restored.'
+        ]);
+    }
 
     public function deleteAllByStatus(string $status)
     {
+        $isAdmin = request()->user()->hasRole(['admin', 'super-admin']);
         $barDatas = $this->model::where('status', $status)->get();
-        $barDatas->each(function ($barData) {
-            $barData->particulars->each(function ($particular) {
-                $particular->values()->delete();
-            });
-            $barData->particulars()->delete();
+
+        $barDatas->each(function ($barData) use ($isAdmin) {
+            if (!$isAdmin) {
+                $barData->update(['status' => 'pending delete']);
+            } else {
+                $barData->delete();
+            }
         });
-        $barDatas->each->delete();
-    
+
         return response()->json([
             'message' => 'BarDatas deleted successfully',
         ], 200);
     }
+    public function restoreAllByStatus(string $status)
+    {
+        $isAdmin = request()->user()->hasRole(['admin', 'super-admin']);
+        $barDatas = $this->model::where('status', $status)->get();
+
+        $barDatas->each(function ($barData) use ($isAdmin) {
+            if (!$isAdmin) {
+                $barData->update(['status' => 'pending restore']);
+            } else {
+                $barData->restore();
+            }
+        });
+
+        return response()->json([
+            'message' => 'BarDatas deleted successfully',
+        ], 200);
+    }
+
+
 
     public function publishAllDrafts()
     {

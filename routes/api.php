@@ -92,6 +92,15 @@ Route::middleware($REQUIRE_AUTH)->group(function () use($resources, $REQUIRE_AUT
 Route::delete('bar-data/del-by-year/{year}', [App\Http\Controllers\Api\BarDataController::class, 'deleteAllValuesWithYear']);
 Route::delete('budgets/del-by-year/{year}', [App\Http\Controllers\Api\BudgetController::class, 'deleteAnnual']);
 
+Route::patch('bar-data/res-by-year/{year}', [App\Http\Controllers\Api\BarDataController::class, 'restoreAllValuesWithYear']);
+Route::patch('budgets/res-by-year/{year}', [App\Http\Controllers\Api\BudgetController::class, 'restoreAnnual']);
+
+Route::delete('bar-data/del-by-status/{status}', [App\Http\Controllers\Api\BarDataController::class, 'deleteAllByStatus']);
+Route::delete('budgets/del-by-status/{status}', [App\Http\Controllers\Api\BudgetController::class, 'deleteAllByStatus']);
+
+Route::patch('bar-data/res-by-status/{status}', [App\Http\Controllers\Api\BarDataController::class, 'restoreAllByStatus']);
+Route::patch('budgets/res-by-status/{status}', [App\Http\Controllers\Api\BudgetController::class, 'restoreAllByStatus']);
+
 
 /*
 |--------------------------------------------------------------------------
