@@ -15,6 +15,11 @@ class BarDataController extends Controller
     protected $resource = BarDataResource::class;
     protected $ExportClass = BarDataExport::class;
 
+    protected $with = [
+        'particulars',
+        'particulars.values',
+        'particulars.values.quarters',
+    ];
 
     protected $rules = [
         'title' => 'required|string|max:255|unique:bar_datas,title',
@@ -39,11 +44,7 @@ class BarDataController extends Controller
         'description',
         'status',
     ];
-    protected $with = [
-        'particulars',
-        'particulars.values',
-        'particulars.values.quarters',
-    ];
+
 
     public function byYear($year)
     {
@@ -52,11 +53,6 @@ class BarDataController extends Controller
         return response()->json([
             'data' => $year,
         ], 200);
-    }
-
-    public function index(Request $request)
-    {
-        return parent::index($request);
     }
 
     public function show($id)
@@ -159,20 +155,41 @@ class BarDataController extends Controller
 
     }
 
-    public function deleteAllValuesWithYear(string $year, string $id)
+    public function deleteAllValuesWithYear(string $year)
     {
-        $barData = $this->model::where('id', $id)
-            ->whereHas('particulars.values', function ($query) use ($year) {
-                $query->where('year', $year);
-            })->firstOrFail();
-    
-        $barData->particulars->each(function ($particular) use ($year) {
-            $particular->values()->where('year', $year)->delete();
-        });
-    
         return response()->json([
             'message' => "Values with year $year deleted successfully",
         ], 200);
+        // $this->checkProperties(2);
+        // $id = request()->query('id', null);
+        // if (is_null($id)) {
+        //     $barData = $this->model::whereHas('particulars.values', function ($query) use ($year) {
+        //             $query->where('year', $year);
+        //         })->firstOrFail();
+        // } else {
+        //     $barData = $this->model::where('id', $id)
+        //         ->whereHas('particulars.values', function ($query) use ($year) {
+        //             $query->where('year', $year);
+        //         })->firstOrFail();
+        // }
+    
+        // $barData->particulars->each(function ($particular) use ($year) {
+        //     $particular->values()->where('year', $year)->forceDelete();
+        // });
+        // if (!is_null($id)) {
+        //     $barData = $this->model::findOrFail($id);
+        // } else{
+        //     $barData = $this->model::whereHas('particulars.values', function ($query) use ($year) {
+        //         $query->where('year', $year);
+        //     })->firstOrFail();
+        // }
+
+    
+        // return response()->json([
+        //     'message' => "Values with year $year deleted successfully",
+        //     'data' => new $this->resource($barData),
+            
+        // ], 200);
     }
 
     public function deleteAllByStatus(string $status)

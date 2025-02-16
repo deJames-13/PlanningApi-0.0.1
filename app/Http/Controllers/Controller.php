@@ -50,12 +50,12 @@ abstract class Controller
         $sort = $request->sort ?? $this->orderBy;
         $order = $request->order ?? $this->order;
         $search = $request->search ?? '';
-        $with = $request->with ?? false;
-
         if ($search !== '') {
             $request->merge(['page' => 1]);
         }
-        
+
+        $with = $request->with ?? false;
+        $this->with = empty($with) ? $this->with : explode(',', $with);
         if (!empty($this->with) || !$with == 'none' || !$with == false) {
             $query = $this->model::with($this->with);
         } else {

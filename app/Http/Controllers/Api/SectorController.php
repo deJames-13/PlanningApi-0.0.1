@@ -14,6 +14,11 @@ class SectorController extends Controller
     protected $resource = SectorResource::class;
     protected $ExportClass = SectorExport::class;
 
+    protected $with = [
+        'department',
+        'objectives',
+        'budgets',
+    ];
     
     protected $searchableColumns = [
         'name', 

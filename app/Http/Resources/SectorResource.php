@@ -17,13 +17,13 @@ class SectorResource extends JsonResource
     {
         return [
             ...parent::toArray($request),
-            'department' => $this->department ? $this->department->only(['id', 'name']) : null,
-            'objectives' => $this->objectives ? $this->objectives->map(function ($objective) {
-                return $objective->only(['id', 'title']);
-            }) : null,
-            'budgets' => $this->budgets ? $this->budgets->map(function ($budget) {
-                return $budget->only(['id', 'title']);
-            }) : null,
+            // 'department' => $this->department ? $this->department->only(['id', 'name']) : null,
+            // 'objectives' => $this->objectives ? $this->objectives->map(function ($objective) {
+            //     return $objective->only(['id', 'title']);
+            // }) : null,
+            // 'budgets' => $this->budgets ? $this->budgets->map(function ($budget) {
+            //     return $budget->only(['id', 'title']);
+            // }) : null,
         ];
     }
 }
