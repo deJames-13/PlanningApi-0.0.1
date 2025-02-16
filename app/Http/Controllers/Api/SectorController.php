@@ -15,7 +15,14 @@ class SectorController extends Controller
     protected $ExportClass = SectorExport::class;
 
     
-    protected $searchableColumns = ['name', 'full_name', 'description', 'department_id'];
+    protected $searchableColumns = [
+        'name', 
+        'full_name', 
+        'description', 
+        'department.name',
+        'department.slug',
+        'department.id',
+    ];
     protected $rules = [
         'name' => 'required|string|max:255|unique:sectors',
         'full_name' => 'nullable|string|max:255',

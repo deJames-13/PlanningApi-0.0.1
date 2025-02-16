@@ -34,6 +34,7 @@ class BarDataController extends Controller
     protected $searchableColumns = [
         'title',
         'description',
+        'status',
     ];
     protected $ExportClass = BarDataExport::class;
 
@@ -149,5 +150,50 @@ class BarDataController extends Controller
         return new $this->resource($barData);
 
     }
+
+    public function deleteAllValuesWithYear(string $year, string $id)
+    {
+        $barData = $this->model::where('id', $id)
+            ->whereHas('particulars.values', function ($query) use ($year) {
+                $query->where('year', $year);
+            })->firstOrFail();
+    
+        $barData->particulars->each(function ($particular) use ($year) {
+            $particular->values()->where('year', $year)->delete();
+        });
+    
+        return response()->json([
+            'message' => "Values with year $year deleted successfully",
+        ], 200);
+    }
+
+    public function deleteAllByStatus(string $status)
+    {
+        $barDatas = $this->model::where('status', $status)->get();
+        $barDatas->each(function ($barData) {
+            $barData->particulars->each(function ($particular) {
+                $particular->values()->delete();
+            });
+            $barData->particulars()->delete();
+        });
+        $barDatas->each->delete();
+    
+        return response()->json([
+            'message' => 'BarDatas deleted successfully',
+        ], 200);
+    }
+
+    public function publishAllDrafts()
+    {
+        $barDatas = $this->model::where('status', 'draft')->get();
+        $barDatas->each(function ($barData) {
+            $barData->update(['status' => 'published']);
+        });
+    
+        return response()->json([
+            'message' => 'BarDatas published successfully',
+        ], 200);
+    }
+
 
 }

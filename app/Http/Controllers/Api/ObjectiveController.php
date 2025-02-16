@@ -11,6 +11,16 @@ class ObjectiveController extends Controller
 {
     protected $model = Objective::class;
     protected $resource = ObjectiveResource::class;
+    protected $searchableColumns = [
+        'title', 
+        'description', 
+        'status',
+        'sector.name',
+        'sector.slug',
+    ];
+
+
+
     protected $rules = [
         'title' => 'required|string|max:255',
         'description' => 'nullable|string',
@@ -63,5 +73,6 @@ class ObjectiveController extends Controller
 
         return new $this->resource($objective);
     }
+
 
 }

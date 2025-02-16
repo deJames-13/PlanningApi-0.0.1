@@ -19,10 +19,11 @@
 - [x] Table subtitles titles revise
 - [x] particular 0 values
 
-- [ ] Report Generation
+- [ ] Report Generation 
     - [x] BAR 
     - [x] overall budgets
-    - [ ] budgets & objectives per office
+    - [x] budgets & objectives per office
+
     - [ ] budgets per office
     - [ ] objectives per office
     - [ ] overall objectives
@@ -45,6 +46,8 @@
 - [ ] make any date an easier option
 - [x] particulars duplication
 - [x] budgets chart year is not ordered
+- [ ] filtering options
+- [ ]
 
 
 <!-- RESEARCH -->

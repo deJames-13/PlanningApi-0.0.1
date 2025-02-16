@@ -73,6 +73,7 @@ abstract class Controller
                 foreach ($this->searchableColumns as $column) {
                     if (strpos($column, '.') !== false) {
                         $relationship = explode('.', $column);
+                        // OPTION FOR Deeper Nested Relationships
                         $q->orWhereHas($relationship[0], function ($q) use ($search, $relationship) {
                             $q->where($relationship[1], 'like', '%' . $search . '%');
                         });

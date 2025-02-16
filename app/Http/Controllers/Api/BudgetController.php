@@ -16,7 +16,15 @@ class BudgetController extends Controller
     protected $resource = BudgetResource::class;
     protected $ExportClass = BudgetExport::class;
     
-    protected $searchableColumns = ['title', 'description', 'current_year'];
+    protected $searchableColumns = [
+        'title', 
+        'description', 
+        'current_year',
+        'current_quarter',
+        'status',
+        'sector.name',
+        'sector.slug',
+    ];
     protected $rules = [
         'title' => 'required|string|unique:budgets',
         'description' => 'nullable|string',
@@ -101,6 +109,21 @@ class BudgetController extends Controller
         }
         
         return new $this->resource($budget);
+    }
+
+
+    public function deleteAnnual(string $year){
+        $budgets = Budget::whereHas('annual', function ($query) use ($year) {
+            $query->where('year', $year);
+        })->get();
+
+        foreach ($budgets as $budget) {
+            $budget->annual()->where('year', $year)->delete();
+        }
+
+        return response()->json([
+            'message' => 'Annual budget for year ' . $year . ' has been deleted.'
+        ]);
     }
 
 
