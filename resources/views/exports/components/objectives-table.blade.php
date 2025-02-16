@@ -65,7 +65,7 @@
 			<td colspan="3" style="word-wrap: break-word;">
 				{{ $objective['title'] }}
 			</td>
-			@isset($objective['quarters'])
+			@if (isset($objective['quarters']) && !empty($objective['quarters']))
 				@foreach ($objective['quarters'] as $quarter)
 					@php
 						$totalTarget += $quarter['target'];
@@ -93,7 +93,7 @@
 				<td style="word-wrap: break-word;" align="center">
 					{{ $percentage }}%
 				</td>
-			@endisset
+			@endif
 		</tr>
 	@endforeach
 

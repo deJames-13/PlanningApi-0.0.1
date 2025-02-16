@@ -6,12 +6,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Department;
 use App\Models\Sector;
+use App\Exports\DepartmentExport;
 use App\Http\Resources\DepartmentResource;
 
 class DepartmentController extends Controller
 {
     protected $model = Department::class;
     protected $resource = DepartmentResource::class;
+    protected $ExportClass = DepartmentExport::class;
     protected $rules = [
         'name' => 'required|string|max:255|unique:departments',
         'full_name' => 'nullable|string|max:255',

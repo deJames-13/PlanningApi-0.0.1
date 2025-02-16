@@ -278,7 +278,7 @@ abstract class Controller
     {
         $this->checkProperties(2);
         if (is_null($this->ExportClass)) {
-            throw new \Exception('Export class is not set.');
+            throw new \Exception('Error: Not Implemented. Export class is not set.');
         }
         if (!in_array($type, ['xls', 'xlsx', 'csv'])) {
             throw new \Exception('Invalid export type.');

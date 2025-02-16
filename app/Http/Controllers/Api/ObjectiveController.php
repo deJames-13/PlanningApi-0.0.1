@@ -5,12 +5,14 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Objective;
+use App\Exports\ObjectiveExport;
 use App\Http\Resources\ObjectiveResource;
 
 class ObjectiveController extends Controller
 {
     protected $model = Objective::class;
     protected $resource = ObjectiveResource::class;
+    protected $ExportClass = ObjectiveExport::class;
     protected $searchableColumns = [
         'title', 
         'description', 
@@ -75,4 +77,10 @@ class ObjectiveController extends Controller
     }
 
 
+    public function export(string $id, string $type){
+        if (!is_numeric($id)) {
+            return response()->json(['message' => 'Invalid id. Please select only one objective.'], 422);
+        } 
+        return parent::export($id, $type);
+    }
 }
