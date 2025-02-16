@@ -102,6 +102,11 @@ Route::prefix('/reports')->group(function () use($REQUIRE_AUTH) {
     Route::get('example', [App\Http\Controllers\Pdf\ReportController::class, 'example']);
     Route::get('sectors/{id}', [App\Http\Controllers\Pdf\ReportController::class, 'sectors']);
 });
+/*
+|--------------------------------------------------------------------------
+| EXPORTS XLSX (Public/Protected)
+|--------------------------------------------------------------------------
+*/
 Route::prefix('/exports')->group(function () use($REQUIRE_AUTH, $resources) {
     foreach ($resources as $resource => $endpoint) {
         try {

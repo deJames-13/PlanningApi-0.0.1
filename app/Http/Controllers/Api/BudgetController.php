@@ -131,5 +131,12 @@ class BudgetController extends Controller
         ]);
     }
 
+    public function export(string $id, string $type){
+        if (!$this->isNumericArray($id) && $id !== 'all') {
+            return response()->json(['message' => 'Invalid ids. None numeric value detected.'], 422);
+        } 
+        return parent::export($id, $type);
+    }
+
 
 }

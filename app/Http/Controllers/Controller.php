@@ -22,6 +22,24 @@ abstract class Controller
     protected $order = 'asc';
     protected $perPage = 10;
 
+    public function isNumericArray($array)
+    {
+
+        if (is_null($array)) {
+            return false;
+        }
+        if (strpos($array, ',') !== false) {
+            $array = explode(',', $array);
+        } 
+        else if (is_numeric($array)) {
+            $array = [$array];
+        } 
+        else {
+            return false;
+        }
+
+        return count(array_filter(array_keys($array), 'is_numeric')) == count($array);
+    }
 
     public function checkProperties($level = 3)
     {
