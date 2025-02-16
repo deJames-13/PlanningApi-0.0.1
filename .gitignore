@@ -26,5 +26,5 @@ yarn-error.log
 /certificates
 ./ca.pem
 examples
-
+public_html
 .log
