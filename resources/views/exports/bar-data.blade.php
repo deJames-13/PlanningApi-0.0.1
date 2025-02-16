@@ -8,10 +8,10 @@
 				@if (isset($data[0]['particulars'][0]))
 					@if (isset($data[0]['particulars'][0]['values']))
 						@foreach ($data[0]['particulars'][0]['values'] as $value)
-							<td>
+							<td style="width: 110px;">
 								Target
 							</td>
-							<td>
+							<td style="width: 110px;">
 								Accomplishment
 							</td>
 						@endforeach
@@ -33,15 +33,23 @@
 				@endif
 			</tr>
 		@endif
+
 		@foreach ($data as $row)
 			<tr>
 				<td colspan="5" style="font-weight: bold; word-wrap: break-word;">
 					{{ $row['title'] }}
 				</td>
 			</tr>
-			<tr rowspan="2">
+			@if (isset($row['description']))
+				<tr rowspan="2">
+					<td colspan="5">
+						{{ $row['description'] }}
+					</td>
+				</tr>
+			@endif
+			<tr>
 				<td colspan="5">
-					{{ $row['description'] }}
+					&nbsp;
 				</td>
 			</tr>
 
@@ -63,11 +71,6 @@
 							@endforeach
 						@endif
 					</tr>
-					{{-- <tr rowspan="2">
-						<td colspan="5">
-							{{ $particular['description'] }}
-						</td>
-					</tr> --}}
 				@endforeach
 			@endif
 		@endforeach

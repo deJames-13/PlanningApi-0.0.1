@@ -19,8 +19,8 @@ class BudgetController extends Controller
     protected $rules = [
         'title' => 'required|string|unique:budgets',
         'description' => 'nullable|string',
-        'current_year' => 'required|integer',
         'status' => 'nullable|string|in:draft,published',
+        'current_year' => 'nullable|integer',
         'current_quarter' => 'nullable|integer',
         'sector_id' => 'nullable|integer|exists:sectors,id',
         'annual' => 'nullable|array',
@@ -48,6 +48,10 @@ class BudgetController extends Controller
             $annualData = $request->annual;
             unset($request['annual']);
         }
+        if (!isset($validated['current_year'])){
+            $validated['current_year'] = end($annualData)['year'] ?? date('Y');
+        }
+        
 
         $budget = $this->model::create($validated);
         foreach ($annualData as $annual) {
@@ -77,15 +81,16 @@ class BudgetController extends Controller
             $annualData = $request->annual;
             unset($request['annual']);
         }
+        if (!isset($validated['current_year'])){
+            $validated['current_year'] = end($annualData)['year'] ?? date('Y');
+        }
 
         $budget = $this->model::find($id);
         if (!$budget) {
             return response()->json(['message' => 'Budget not found.'], 404);
         }
         $budget->update($validated);
-
         $budget->annual()->forceDelete();
-
 
         foreach ($annualData as $annual) {
             $quarters = $annual['quarters'];

@@ -11,12 +11,15 @@ class BudgetExport implements FromView
 {
     public function view(): View
     {
-        return view('exports.budgets', [
-            'data' => Budget::with([
-                'annual',
-                'annual.quarters',
-            ])->get()
-            ]
+        $data = Budget::with([
+            'annual' => function ($query) {
+                $query->orderBy('year', 'asc');
+            },
+            'annual.quarters',
+        ]);
+
+        $data = $data->get();
+        return view('exports.budgets', ['data' => $data]
         );
     }
 }
