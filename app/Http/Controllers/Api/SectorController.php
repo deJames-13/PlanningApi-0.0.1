@@ -6,18 +6,22 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Sector;
 use App\Http\Resources\SectorResource;
+use App\Exports\SectorExport;
 
 class SectorController extends Controller
 {
     protected $model = Sector::class;
     protected $resource = SectorResource::class;
+    protected $ExportClass = SectorExport::class;
+
+    
+    protected $searchableColumns = ['name', 'full_name', 'description', 'department_id'];
     protected $rules = [
         'name' => 'required|string|max:255|unique:sectors',
         'full_name' => 'nullable|string|max:255',
         'description' => 'nullable|string|max:255',
         'department_id' => 'nullable|integer|exists:departments,id',
     ];
-    protected $searchableColumns = ['name', 'full_name', 'description', 'department_id'];
 
 
     public function update(Request $request, $id)
@@ -43,5 +47,12 @@ class SectorController extends Controller
         return response()->json($sectors);
     }
 
+    public function export(string $id, string $type){
+        \Log::info(is_numeric($id));
+        if (!is_numeric($id)) {
+            return response()->json(['message' => 'Invalid id.'], 422);
+        } 
+        return parent::export($id, $type);
+    }
 
 }

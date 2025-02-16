@@ -15,6 +15,7 @@ class BudgetController extends Controller
     protected $model = Budget::class;
     protected $resource = BudgetResource::class;
     protected $ExportClass = BudgetExport::class;
+    
     protected $searchableColumns = ['title', 'description', 'current_year'];
     protected $rules = [
         'title' => 'required|string|unique:budgets',

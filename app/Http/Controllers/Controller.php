@@ -279,12 +279,17 @@ abstract class Controller
         }
 
         $fileType = \Maatwebsite\Excel\Excel::XLSX;
+        $fileName = app($this->model)->getTable() . '-' . date('Y-m-d-H-i-s');
         if ($type == 'csv') {
             $fileType = \Maatwebsite\Excel\Excel::CSV;
+            $fileName .= '.csv';
+        }
+        else {
+            $fileName .= '.xlsx';
         }
         
 
-        return Excel::download(new $this->ExportClass, 'test.xlsx', $fileType);;
+        return Excel::download(new $this->ExportClass($id), $fileName, $fileType);;
 
     }
 
