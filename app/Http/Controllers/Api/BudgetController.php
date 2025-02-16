@@ -115,20 +115,20 @@ class BudgetController extends Controller
 
 
     public function deleteAnnual(string $year){
-        return [
+
+        $this->checkProperties(2);
+        
+        $budgets = Budget::whereHas('annual', function ($query) use ($year) {
+            $query->where('year', $year);
+        })->get();
+
+        foreach ($budgets as $budget) {
+            $budget->annual()->where('year', $year)->forceDelete();
+        }
+
+        return response()->json([
             'message' => 'Annual budget for year ' . $year . ' has been deleted.'
-        ];
-        // $budgets = Budget::whereHas('annual', function ($query) use ($year) {
-        //     $query->where('year', $year);
-        // })->get();
-
-        // foreach ($budgets as $budget) {
-        //     $budget->annual()->where('year', $year)->delete();
-        // }
-
-        // return response()->json([
-        //     'message' => 'Annual budget for year ' . $year . ' has been deleted.'
-        // ]);
+        ]);
     }
 
 

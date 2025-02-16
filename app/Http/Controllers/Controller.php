@@ -56,6 +56,9 @@ abstract class Controller
 
         $with = $request->with ?? false;
         $this->with = empty($with) ? $this->with : explode(',', $with);
+        if ($with === 'none'){
+            $this->with = [];
+        }
         if (!empty($this->with) || !$with == 'none' || !$with == false) {
             $query = $this->model::with($this->with);
         } else {

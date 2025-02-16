@@ -90,7 +90,7 @@ Route::middleware($REQUIRE_AUTH)->group(function () use($resources, $REQUIRE_AUT
 |--------------------------------------------------------------------------
  */
 Route::delete('bar-data/del-by-year/{year}', [App\Http\Controllers\Api\BarDataController::class, 'deleteAllValuesWithYear']);
-Route::delete('budgets/del-by-year/{year}', [App\Http\Controllers\Api\BarDataController::class, 'deleteAnnual']);
+Route::delete('budgets/del-by-year/{year}', [App\Http\Controllers\Api\BudgetController::class, 'deleteAnnual']);
 
 
 /*
