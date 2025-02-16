@@ -39,6 +39,9 @@ class ParticularController extends Controller
         $particular = $barData->particulars()->create($validated);
 
         foreach ($values as $value) {
+            if (!isset($value['quarters'])){
+                $value['quarters'] = [];
+            }
             $quarters = $value['quarters'];
             unset($value['quarters']);
             $newValue = $particular->values()->create($value);
@@ -59,10 +62,20 @@ class ParticularController extends Controller
         unset($validated['values']);
 
         $particular = $this->model::findOrFail($id);
-        $particular->update($validated);
+        $particular->load('values.quarters');
 
+        $particular->barData()->dissociate();
+        $particular->values()->each(function($value){
+            $value->quarters()->forceDelete();
+        });
         $particular->values()->forceDelete();
+        $particular->update($validated);
+        $particular->barData()->associate($validated['bar_data_id']);   
+
         foreach ($values as $value) {
+            if (!isset($value['quarters'])){
+                $value['quarters'] = [];
+            }
             $quarters = $value['quarters'];
             unset($value['quarters']);
 
