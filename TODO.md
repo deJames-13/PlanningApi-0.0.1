@@ -22,11 +22,11 @@
 - [ ] Report Generation
     - [x] BAR 
     - [] BAR per year ?
+    - [x] overall budgets
+    - [ ] budgets & objectives per office
     - [ ] budgets per office
-    - [ ] overall budgets
     - [ ] objectives per office
     - [ ] overall objectives
-    - [ ] budgets & objectives per office
 
 - [ ] Yearly Reports
     - [ ] maybe have a page where it can be seen by year
