@@ -48,7 +48,6 @@ class SectorController extends Controller
     }
 
     public function export(string $id, string $type){
-        \Log::info(is_numeric($id));
         if (!is_numeric($id)) {
             return response()->json(['message' => 'Invalid id.'], 422);
         } 
