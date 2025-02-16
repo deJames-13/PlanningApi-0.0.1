@@ -49,7 +49,7 @@ class SectorController extends Controller
 
     public function export(string $id, string $type){
         if (!is_numeric($id)) {
-            return response()->json(['message' => 'Invalid id.'], 422);
+            return response()->json(['message' => 'Invalid id. Please select only one sector.'], 422);
         } 
         return parent::export($id, $type);
     }
