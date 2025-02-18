@@ -171,8 +171,9 @@ class BarDataController extends Controller
         }
     
         $barData->particulars->each(function ($particular) use ($year) {
-            $particular->values()->where('year', $year)->forceDelete();
+            $particular->values()->where('year', $year)->delete();
         });
+
         if (!is_null($id)) {
             $barData = $this->model::findOrFail($id);
         } else{
@@ -191,14 +192,32 @@ class BarDataController extends Controller
     public function restoreAllValuesWithYear(string $year){
 
         $this->checkProperties(2);
-        
-        // $budgets = Budget::whereHas('annual', function ($query) use ($year) {
-        //     $query->where('year', $year);
-        // })->get();
 
-        // foreach ($budgets as $budget) {
-        //     $budget->annual()->where('year', $year)->forceDelete();
-        // }
+        $id = request()->query('id', null);
+
+        if (is_null($id)) {
+            $barData = $this->model::whereHas('particulars.values', function ($query) use ($year) {
+                    $query->where('year', $year);
+                })->firstOrFail();
+        } else {
+            $barData = $this->model::where('id', $id)
+                ->whereHas('particulars.values', function ($query) use ($year) {
+                    $query->where('year', $year);
+                })->firstOrFail();
+        }
+
+        $barData->particulars->each(function ($particular) use ($year) {
+            $particular->values()->where('year', $year)->restore();
+        });
+
+        if (!is_null($id)) {
+            $barData = $this->model::findOrFail($id);
+        } else{
+            $barData = $this->model::whereHas('particulars.values', function ($query) use ($year) {
+                $query->where('year', $year);
+            })->firstOrFail();
+        }
+
 
         return response()->json([
             'message' => 'Annual bar data for year ' . $year . ' has been restored.'

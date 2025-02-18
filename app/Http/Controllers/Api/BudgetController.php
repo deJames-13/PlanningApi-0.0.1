@@ -123,7 +123,7 @@ class BudgetController extends Controller
         })->get();
 
         foreach ($budgets as $budget) {
-            $budget->annual()->where('year', $year)->forceDelete();
+            $budget->annual()->where('year', $year)->delete();
         }
 
         return response()->json([
@@ -133,14 +133,14 @@ class BudgetController extends Controller
     public function restoreAnnual(string $year){
 
         $this->checkProperties(2);
-        
-        // $budgets = Budget::whereHas('annual', function ($query) use ($year) {
-        //     $query->where('year', $year);
-        // })->get();
 
-        // foreach ($budgets as $budget) {
-        //     $budget->annual()->where('year', $year)->forceDelete();
-        // }
+        $budgets = Budget::whereHas('annual', function ($query) use ($year) {
+            $query->where('year', $year);
+        })->onlyTrashed()->get();
+
+        foreach ($budgets as $budget) {
+            $budget->annual()->where('year', $year)->restore();
+        }
 
         return response()->json([
             'message' => 'Annual budget for year ' . $year . ' has been restored.'
