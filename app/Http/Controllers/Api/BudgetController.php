@@ -148,31 +148,37 @@ class BudgetController extends Controller
     }
     public function deleteAllByStatus(string $status)
     {
+        $this->checkProperties(2);
         $isAdmin = request()->user()->hasRole(['admin', 'super-admin']);
-        $barDatas = $this->model::where('status', $status)->get();
 
-        $barDatas->each(function ($barData) use ($isAdmin) {
+        $budgets = $this->model::where('status', $status)->get();
+
+        $budgets->each(function ($budget) use ($isAdmin) {
             if (!$isAdmin) {
-                $barData->update(['status' => 'pending delete']);
+                $budget->update(['status' => 'pending delete']);
             } else {
-                $barData->delete();
+                $budget->delete();
             }
         });
 
         return response()->json([
-            'message' => 'BarDatas deleted successfully',
+            'message' => 'Budgets deleted successfully',
         ], 200);
+
+
     }
     public function restoreAllByStatus(string $status)
     {
+        $this->checkProperties(2);
         $isAdmin = request()->user()->hasRole(['admin', 'super-admin']);
-        $barDatas = $this->model::where('status', $status)->get();
 
-        $barDatas->each(function ($barData) use ($isAdmin) {
+        $budgets = $this->model::where('status', $status)->get();
+
+        $budgets->each(function ($budget) use ($isAdmin) {
             if (!$isAdmin) {
-                $barData->update(['status' => 'pending restore']);
+                $budget->update(['status' => 'pending restore']);
             } else {
-                $barData->restore();
+                $budget->restore();
             }
         });
 

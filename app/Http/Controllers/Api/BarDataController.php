@@ -237,8 +237,11 @@ class BarDataController extends Controller
             }
         });
 
+        $barDatas = $this->model::where('status', 'pending delete')->get();
+
         return response()->json([
             'message' => 'BarDatas deleted successfully',
+            'data' => $barDatas,
         ], 200);
     }
     public function restoreAllByStatus(string $status)
