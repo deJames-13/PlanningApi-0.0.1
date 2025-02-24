@@ -46,7 +46,7 @@
 
 - [ ] batch publish
 <!-- ONGOING -->
-- [ ] batch pending delete   <!-- GOTO: api/resources.js -->
+- [x] batch pending delete   <!-- GOTO: api/resources.js -->
 - [ ] batch pending restore
 
 <!-- IMPROVEMENTS -->

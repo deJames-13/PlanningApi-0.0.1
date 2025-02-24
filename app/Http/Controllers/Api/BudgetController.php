@@ -16,7 +16,11 @@ class BudgetController extends Controller
     protected $resource = BudgetResource::class;
     protected $ExportClass = BudgetExport::class;
 
-    protected $with = ['sector'];
+    protected $with = [
+        'sector',
+        'annual',
+        'annual.quarters.'
+    ];
     
     protected $searchableColumns = [
         'title', 

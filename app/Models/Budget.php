@@ -10,6 +10,8 @@ class Budget extends Model
     use SoftDeletes;    
     
     protected $guarded = ['id'];
+    // with annual and sector
+    protected $with = ['annual', 'sector'];
 
     // belongsTo: Sector
     public function sector()

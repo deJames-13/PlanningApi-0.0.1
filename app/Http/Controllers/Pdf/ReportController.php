@@ -24,13 +24,23 @@ class ReportController extends Controller
         if(!$sector) {
             return response()->json(['message' => 'Sector not found'], 404);
         }
+
+        $sector->load([
+            'department',
+            'budgets',
+            'budgets.annual',
+            'budgets.annual.quarters',
+            'objectives',
+            'objectives.quarters',
+        ]);
+
         $data = [
             'title' => 'Sector PDF',
             'content' => 'This is a sector PDF file.',
             'date' => date('m/d/Y'),
             'sector' => $sector
         ];
-        $pdf = \PDF::loadView('pdf.example' , $data);
+        $pdf = \PDF::loadView('pdf.sectors' , $data);
         return $pdf->download("sector_$id.pdf");
     }
 
