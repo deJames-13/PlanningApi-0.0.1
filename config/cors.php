@@ -2,7 +2,7 @@
 
 return [
 
-    'paths' => ['*'],
+    'paths' => ['api/*'],
     'allowed_methods' => ['*'],
     'allowed_origins' => [
         env('FRONTEND_URL', 'https://planning-dashboard.vercel.app'),

@@ -18,3 +18,13 @@ ___
 5. using .htaccess, reroute all non api requests to react folder
 
 
+
+# TODO 
+__ 
+
+- [ ] test api from cpanel 
+- [ ] test dashboard from cpanel 
+- [ ] check for cors error 
+
+
+
