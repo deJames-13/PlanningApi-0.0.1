@@ -17,6 +17,7 @@ class DepartmentController extends Controller
     protected $rules = [
         'name' => 'required|string|max:255|unique:departments',
         'full_name' => 'nullable|string|max:255',
+        'index' => 'nullable|integer',
     ];
 
     
@@ -27,6 +28,8 @@ class DepartmentController extends Controller
         $rules = [
             'name' => 'required|string|max:255|unique:departments,name,' . $id,
             'full_name' => 'nullable|string|max:255',
+            'index' => 'nullable|integer',
+            'related_to' => 'nullable|integer|exists:departments,id|not_in:' . $id,
         ];
 
         $validData = !empty($this->rules) ? $request->validate($rules) : $request->all();

@@ -35,6 +35,11 @@ DirectoryIndex /react/index.html
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^assets/(.*)$ /react/assets/$1 [L]
+    
+    # Handle Logo png
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^logo.png /react/logo.png [L]
 
     # Handle requests for react routes
     RewriteCond %{REQUEST_FILENAME} !-f
