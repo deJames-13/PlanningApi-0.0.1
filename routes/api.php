@@ -4,6 +4,18 @@
 $REQUIRE_AUTH = config('app.auth_disabled') ? '' : 'jwt.auth';
 \Log::info("REQUIRE_AUTH: $REQUIRE_AUTH");
 
+
+// Test if api is working
+Route::get('test-api', function () {
+    return response()->json(['success' => true, 'message' => 'API is working']);
+});
+
+Route::get('836529', function () {
+    $whoami = shell_exec('whoami');
+    return response()->json(['success' => true, 'message' => 'Shell test', 'whoami' => $whoami]);
+});
+
+
 /*
 |--------------------------------------------------------------------------
 | AUTHENTICATION (Laravel Sanctum) 
