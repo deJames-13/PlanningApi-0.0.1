@@ -1,7 +1,7 @@
 # php_value display_errors On
-php_value mbstring.http_input pass
 # php_value date.timezone America/New_York
 php_value upload_max_filesize 10M
+php_value mbstring.http_input pass
 php_value post_max_size 10M
 php_value max_input_time 300
 php_value max_execution_time 300
@@ -35,7 +35,7 @@ DirectoryIndex /react/index.html
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^assets/(.*)$ /react/assets/$1 [L]
-    
+
     # Handle Logo png
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d

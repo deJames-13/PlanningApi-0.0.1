@@ -5,20 +5,9 @@ $REQUIRE_AUTH = config('app.auth_disabled') ? '' : 'jwt.auth';
 \Log::info("REQUIRE_AUTH: $REQUIRE_AUTH");
 
 
-// Test if api is working
-Route::get('test-api', function () {
-    return response()->json(['success' => true, 'message' => 'API is working']);
-});
-
-Route::get('836529', function () {
-    $whoami = shell_exec('whoami');
-    return response()->json(['success' => true, 'message' => 'Shell test', 'whoami' => $whoami]);
-});
-
-
 /*
 |--------------------------------------------------------------------------
-| AUTHENTICATION (Laravel Sanctum) 
+| AUTHENTICATION (Laravel Sanctum)
 |--------------------------------------------------------------------------
 */
 
@@ -34,9 +23,10 @@ Route::get('csrf', [App\Http\Controllers\Api\AuthController::class, 'csrf']);
 
 
 
+
 /*
 |--------------------------------------------------------------------------
-| Resources 
+| Resources
 |--------------------------------------------------------------------------
 |
 | CRUD resources to be registered. Requires the following structure:
@@ -57,7 +47,7 @@ $resources = [
     'permissions' => [
         'controller'=>App\Http\Controllers\Api\UserController::class,
         'middleware' => ['role:super-admin']
-    ], 
+    ],
     */
     'departments' => [
         'controller'=>App\Http\Controllers\Api\DepartmentController::class,
@@ -94,20 +84,20 @@ Route::middleware($REQUIRE_AUTH)->group(function () use($resources, $REQUIRE_AUT
             \Log::error("Error registering resource $resource: " . $th->getMessage());
         }
     }
-    /* 
+    /*
     |--------------------------------------------------------------------------
     | EXTRAS
     |--------------------------------------------------------------------------
      */
     Route::delete('bar-data/del-by-year/{year}', [App\Http\Controllers\Api\BarDataController::class, 'deleteAllValuesWithYear']);
     Route::delete('budgets/del-by-year/{year}', [App\Http\Controllers\Api\BudgetController::class, 'deleteAnnual']);
-    
+
     Route::patch('bar-data/res-by-year/{year}', [App\Http\Controllers\Api\BarDataController::class, 'restoreAllValuesWithYear']);
     Route::patch('budgets/res-by-year/{year}', [App\Http\Controllers\Api\BudgetController::class, 'restoreAnnual']);
-    
+
     Route::delete('bar-data/del-by-status/{status}', [App\Http\Controllers\Api\BarDataController::class, 'deleteAllByStatus']);
     Route::delete('budgets/del-by-status/{status}', [App\Http\Controllers\Api\BudgetController::class, 'deleteAllByStatus']);
-    
+
     Route::patch('bar-data/res-by-status/{status}', [App\Http\Controllers\Api\BarDataController::class, 'restoreAllByStatus']);
     Route::patch('budgets/res-by-status/{status}', [App\Http\Controllers\Api\BudgetController::class, 'restoreAllByStatus']);
 });
@@ -138,13 +128,13 @@ Route::prefix('/exports')->group(function () use($REQUIRE_AUTH, $resources) {
             \Log::error("Error registering export $resource: " . $th->getMessage());
         }
     }
-    
+
 });
 
 
 /*
 |--------------------------------------------------------------------------
-| CHARTS (Public/Protected) 
+| CHARTS (Public/Protected)
 |--------------------------------------------------------------------------
 */
 Route::prefix('/charts')->group(function () use($REQUIRE_AUTH) {
