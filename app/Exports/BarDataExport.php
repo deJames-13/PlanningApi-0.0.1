@@ -10,6 +10,8 @@ class BarDataExport implements FromView
 {
     public function __construct(string $id)
     {
+
+
         $this->id = $id === 'all' ? null : $id;
         if (strpos($id, ',') !== false) {
             $this->id = explode(',', $id);
@@ -28,7 +30,6 @@ class BarDataExport implements FromView
         if ($this->id) {
             $data = $data->whereIn('id', $this->id);
         }
-
         $data = $data->get();
         return view('exports.bar-data', [
             'data' => $data

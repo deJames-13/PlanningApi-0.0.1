@@ -14,7 +14,7 @@
 - [x] Table subtitles titles revise
 - [x] particular 0 values
 
-- [ ] Report Generation 
+- [x] Report Generation 
     - [x] BAR 
     - [x] overall budgets
     - [x] budgets & objectives per office
@@ -25,7 +25,7 @@
     <!-- - [] BAR per year ? -->
 
 - [ ] Yearly Reports
-    - [ ] maybe have a page where it can be seen by year
+    <!-- - [ ] maybe have a page where it can be seen by year -->
     - [x] bar data is by year       - delete by year
     - [x] budget is by year         - delete by year
 
@@ -42,23 +42,27 @@
 - [x] particulars duplication
 - [x] budgets chart year is not ordered
 - [x] allow no sector objective
-- [ ] filtering options
+<!-- - [x] filtering options -->
 
-- [ ] batch publish
+<!-- - [ ] batch publish -->
 <!-- ONGOING -->
 - [x] batch pending delete   <!-- GOTO: api/resources.js -->
-- [ ] batch pending restore
+<!-- - [x] batch pending restore -->
 
 <!-- IMPROVEMENTS -->
-- [ ] Main Dashboard Page lacks details
+<!-- - [ ] Main Dashboard Page lacks details -->
 - [x] Main Top Bar searching 
-- [ ]
+- [x] Direct to table after adding and sor tby date
+
+- [ ] Arrange Departments and Offices properly
+- [ ] Add index to departments, offices to arange them
+- [ ] php_fileinfo enable in cpanel
+
 
 
 
 <!-- RESEARCH -->
-- [ ] research cPanel 
-- [ ]
+- [x] research cPanel 
 
 
 
@@ -73,4 +77,5 @@
 - [x] Downloadables
     - [x] Excel
 
-- [ ] Help system
+
+

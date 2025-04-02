@@ -19,12 +19,12 @@ ___
 
 
 
-# TODO 
-__ 
 
-- [ ] test api from cpanel 
-- [ ] test dashboard from cpanel 
-- [ ] check for cors error 
-
-
+___ UPDATES ___
+1. Export current database and download it for backup
+2. Build new updates for frontend
+3. Move build to server/react
+4. Double check .htaccess
+5. Compress server to zip 
+6. Upload to hosting and test deployment
 
