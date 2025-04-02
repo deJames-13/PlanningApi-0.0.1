@@ -3,6 +3,16 @@
 // ini_set('max_execution_time', 300);
 $REQUIRE_AUTH = config('app.auth_disabled') ? '' : 'jwt.auth';
 \Log::info("REQUIRE_AUTH: $REQUIRE_AUTH");
+ 
+
+// Test if api is working
+
+ 
+
+Route::get('test-api', function () {
+    return response()->json(['success' => true, 'message' => 'API is working']);
+});
+ 
 
 
 /*
